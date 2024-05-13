@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model DreamJob.BusinessLogic.
+
+<h1>
+    Register as an employer
+</h1>
+
+<form asp-action="Register" asp-controller="User">
+
+    <div>
+        <label asp-for="">Surname</label>
+        <input asp-for="Surname"/>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email"/>
+    </div>
+
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password"/>
+    </div>
+</form>

@@ -1,0 +1,72 @@
+﻿
+@{
+}
+
+@model RegisterViewModel;
+
+  @*  public virtual ICollection<CandidateExperience> CandidateExperiences { get; } = new List<CandidateExperience>();
+
+    public virtual ICollection<CandidateSkill> CandidateSkills { get; } = new List<CandidateSkill>();
+
+    public virtual ICollection<CandidateStudy> CandidateStudies { get; } = new List<CandidateStudy>();
+
+    public virtual ICollection<CandidatesCareerField> CandidatesCareerFields { get; } = new List<CandidatesCareerField>();
+
+    public virtual ICollection<Interaction> Interactions { get; } = new List<Interaction>();
+*@
+<h1>
+    Register as a job seeker
+</h1>
+
+<form asp-action="Register" asp-controller="User">
+    <div>
+        <label asp-for="@Model.FirstName">Firstname</label>
+        <input asp-for="@Model.FirstName" />
+    </div>
+
+    <div>
+        <label asp-for="Surname">Surname</label>
+        <input asp-for="Surname"/>
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email"/>
+    </div>
+
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password"/>
+    </div>
+
+   @* <div>
+        <label>Confirm your password</label>
+        <input />
+    </div>*@
+
+     <div>
+        <label asp-for="CandidateDescription">Description about yourself</label>
+        <input asp-for="CandidateDescription" />
+     </div>
+
+                                            <div>
+                                                <label asp-for="Linkedin">Linkedin Account</label>
+                                                <input asp-for="Linkedin"/>
+                                            </div>
+
+
+@*
+    <div>
+        <label>Birthday</label>
+        <input />
+    </div>*@
+
+
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+
+    <div>
+        <a asp-action="Login" asp-controller="Login">Back</a>
+    </div>
+</form>

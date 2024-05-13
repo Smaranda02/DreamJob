@@ -1,0 +1,26 @@
+﻿
+@{
+}
+
+@model DreamJob.BusinessLogic.Users.ViewModels.LoginViewModel;
+
+
+<h1>
+    Login
+</h1>
+
+<form asp-controller="User" asp-action="Login">
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email"/>
+    </div>
+
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" />
+    </div>
+
+    <div>
+        <input type="submit" value="Login"/>
+    </div>
+</form>

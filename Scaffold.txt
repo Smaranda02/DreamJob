@@ -1,0 +1,13 @@
+Scaffolding command : 
+
+Scaffold-DbContext -Provider Microsoft.EntityFrameworkCore.SqlServer -Connection "Server=DESKTOP-9E5HMJQ\SQL_SERVER;Initial Catalog=DreamJob;Integrated Security=true;
+TrustServerCertificate= true;" -OutputDir "Entities" -ContextDir "EntityFramework"
+
+
+Migration commands : 
+
+1. Add-Migration "Initial migration" -Context EFCoreContext;
+2. Update-Database.
+
+
+
