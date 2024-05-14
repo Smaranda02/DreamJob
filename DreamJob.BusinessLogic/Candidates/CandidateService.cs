@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
-using DreamJob.BusinessLogic.Users.ViewModels;
+using DreamJob.BusinessLogic.Candidates.ViewModels;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
