@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using DreamJob.BusinessLogic.Employer.ViewModels;
+using DreamJob.BusinessLogic.Employers.ViewModels;
 using DreamJob.BusinessLogic.Employers;
 
 namespace DreamJob.Controllers

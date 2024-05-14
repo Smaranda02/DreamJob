@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using DreamJob.BusinessLogic.Users.ViewModels;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates;
+using DreamJob.BusinessLogic.Candidates.ViewModels;
 
 namespace DreamJob.Controllers
 {
