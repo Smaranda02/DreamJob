@@ -4,26 +4,31 @@
 @{
 }
 
-@model DreamJob.BusinessLogic.Users.ViewModels.RegisterViewModel
+@model DreamJob.BusinessLogic.Employers.ViewModels.RegisterViewModel
 
 <h1>
     Register as an employer 
 </h1>
 
-<form asp-action="Register" asp-controller="User">
+<form asp-action="Register" asp-controller="Employer">
 
     <div>
-        <label asp-for="Surname">Surname</label>
-        <input asp-for="Surname"/>
+        <label asp-for="EmployerName">Name</label>
+        <input asp-for="EmployerName"/>
     </div>
 
     <div>
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email"/>
+        <label asp-for="OfficeLocation">Office Location</label>
+        <input asp-for="OfficeLocation"/>
     </div>
 
     <div>
-        <label asp-for="Password">Password</label>
-        <input asp-for="Password"/>
+        <label asp-for="EmployerDescription">Description</label>
+        <input asp-for="EmployerDescription" />
+    </div>
+
+    <div>
+        <label asp-for="EmployerLinkedin">Linkedin</label>
+        <input asp-for="EmployerLinkedin" />
     </div>
 </form>

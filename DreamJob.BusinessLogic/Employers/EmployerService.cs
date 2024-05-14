@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DreamJob.Entities.Entities;
-using DreamJob.BusinessLogic.Employer.ViewModels;
+using DreamJob.BusinessLogic.Employers.ViewModels;
 
 
 namespace DreamJob.BusinessLogic.Employers
