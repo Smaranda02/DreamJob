@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DreamJob.BusinessLogic.Candidate.ViewModels
+namespace DreamJob.BusinessLogic.Users.ViewModels
 {
     public class RegisterViewModel
     {

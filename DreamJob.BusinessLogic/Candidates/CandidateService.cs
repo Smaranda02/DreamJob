@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DreamJob.BusinessLogic.Candidate.ViewModels;
 using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
-
+using DreamJob.BusinessLogic.Users.ViewModels;
 
 namespace DreamJob.BusinessLogic.Candidates
 {

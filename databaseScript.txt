@@ -1,0 +1,268 @@
+DROP TABLE IF EXISTS Roles
+DROP TABLE IF EXISTS Candidates 
+DROP TABLE IF EXISTS Posts 
+
+CREATE TABLE [DreamJob].[dbo].[Roles] (
+	ID int identity,
+    RoleName nvarchar(100),
+	CONSTRAINT Roles_PK PRIMARY KEY (ID)
+);
+GO
+
+
+CREATE TABLE [DreamJob].[dbo].[CareerFields](
+	ID int identity,
+	CareerFieldName varchar(100),
+	CONSTRAINT CareerFields_PK PRIMARY KEY (ID),
+);
+GO
+
+--alter table [DreamJob].[dbo].[Users]
+--alter column UserPassword nvarchar(100);
+CREATE TABLE [DreamJob].[dbo].[Users](
+	ID int identity,
+	Email nvarchar(100) UNIQUE NOT NULL,
+	--UserPassword varbinary(500) NOT NULL,
+	UserPassword nvarchar(100),
+	Username nvarchar(100)  UNIQUE,   
+	RoleId int,
+	CONSTRAINT Users_PK PRIMARY KEY (ID),
+	CONSTRAINT Users_RoleId_FK FOREIGN KEY (RoleId) REFERENCES Roles (ID),
+);
+GO
+
+
+CREATE TABLE [DreamJob].[dbo].[Candidates](
+   ID int identity,
+   FirstName nvarchar(100) NOT NULL,
+   Surname nvarchar(100) NOT NULL,
+   UserId int NOT NULL,
+   CandidateDescription nvarchar(max) NOT NULL,
+   Linkedin VARCHAR(100) NOT NULL,
+   CONSTRAINT Candidates_PK PRIMARY KEY (ID),
+   CONSTRAINT Candidates_UserId_FK FOREIGN KEY (UserId) REFERENCES Users(ID),   
+);
+GO
+
+
+CREATE TABLE [DreamJob].[dbo].[Employers](
+	ID int identity,
+	EmployerName varchar(100) NOT NULL,
+	OfficeLocation varchar(100) NOT NULL,
+    EmployerDescription nvarchar(max) NOT NULL,
+	EmployerLinkedin VARCHAR(100) NOT NULL,
+	CONSTRAINT Emlpoyer_PK PRIMARY KEY (ID),
+);
+GO
+
+
+
+CREATE TABLE [DreamJob].[dbo].[JobOffers](
+	ID int identity,
+	EmployerId int NOT NULL,
+	Salary decimal(10,2) NOT NULL,
+    JobDescription nvarchar(max) NOT NULL,
+	CONSTRAINT JobOffer_PK PRIMARY KEY (ID),
+	CONSTRAINT JobOffer_EmployerId_FK FOREIGN KEY (EmployerId) REFERENCES Employers(ID),
+);
+GO
+
+
+CREATE TABLE [DreamJob].[dbo].[Skills](
+    ID int identity,
+    SkillName VARCHAR(100) NOT NULL,
+    SkillDescription nvarchar(max) NOT NULL,
+	CONSTRAINT Skills_PK PRIMARY KEY (ID),
+);
+GO
+
+
+
+CREATE TABLE [DreamJob].[dbo].[Studies](
+    ID INT identity,
+    University VARCHAR(100) NOT NULL,
+    Specialty VARCHAR(100) NOT NULL,
+    StartYear date NOT NULL,
+    EndYear date NOT NULL,
+	CONSTRAINT Studies_PK PRIMARY KEY (ID),
+);
+GO
+
+
+
+CREATE TABLE [DreamJob].[dbo].[Experiences](
+    ID INT identity,
+    ExperienceName VARCHAR(100) NOT NULL,
+    StartYear date NOT NULL,
+    EndYear date NOT NULL,
+    ExperienceDescription nvarchar(max) NOT NULL,
+	CONSTRAINT Experiences_PK PRIMARY KEY (ID),
+);
+GO
+
+
+CREATE TABLE [DreamJob].[dbo].[Interactions](
+    ID INT identity,
+    CandidateId INT,
+    JobOfferId INT,
+    InteractionDate DATE NOT NULL,
+    FeedbackCandidate BIT NOT NULL,
+	FeedbackEmployer BIT NOT NULL,
+	CONSTRAINT Interactions_PK PRIMARY KEY (ID),
+	CONSTRAINT Interactions_CandidateId_FK  FOREIGN KEY (CandidateId) REFERENCES Candidates(ID),
+	CONSTRAINT Interactions_JobOfferId_FK FOREIGN KEY (JobOfferId) REFERENCES JobOffers(ID)
+);
+GO
+
+
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[CandidatesCareerFields](
+	ID int identity,
+	CareerFieldId int,
+	CandidateId int,
+	CONSTRAINT CareerFieldsCandidates_PK PRIMARY KEY (ID),
+	CONSTRAINT CareerFieldsCandidates_CandidateId_FK FOREIGN KEY (CandidateId) REFERENCES Candidates(ID),
+	CONSTRAINT CareerFieldsCandidates_CareerFieldId FOREIGN KEY (CareerFieldId) REFERENCES CareerFields(ID)
+);
+GO
+
+
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[EmployersCareerFields](
+	ID int identity,
+	CareerFieldId int,
+	EmployerId int,
+	CONSTRAINT EmployersCareerFields_PK PRIMARY KEY (ID),
+	CONSTRAINT EmployersCareerFields_EmployerId_FK FOREIGN KEY (EmployerId) REFERENCES Employers (ID),
+	CONSTRAINT EmployersCareerFields_CareerFieldId FOREIGN KEY (CareerFieldId) REFERENCES CareerFields (ID)
+);
+GO
+
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[JobSkills](
+    ID INT identity,
+    JobOfferId INT FOREIGN KEY REFERENCES JobOffers(ID),
+    SkillId INT FOREIGN KEY REFERENCES Skills(ID),
+	CONSTRAINT JobSkills_PK PRIMARY KEY (ID),
+	CONSTRAINT JobSkills_JobOfferId_FK FOREIGN KEY (JobOfferId) REFERENCES JobOffers(ID),
+	CONSTRAINT JobSkills_SkillId_FK FOREIGN KEY (SkillId) REFERENCES Skills(ID)
+);
+GO
+
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[CandidateSkills](
+    ID INT identity,
+    CandidateId INT,
+    SkillId INT,
+	CONSTRAINT CandidateSkill_PK PRIMARY KEY (ID),
+	CONSTRAINT CandidateSkills_CandidateId_FK FOREIGN KEY (CandidateId) REFERENCES Candidates(ID),
+	CONSTRAINT CandidateSkills_SkillId_FK FOREIGN KEY (SkillId) REFERENCES Skills(ID),
+);
+GO
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[CandidateStudies](
+    ID INT identity,
+    CandidateId INT,
+    StudiesId INT,
+	CONSTRAINT CandidateStudies_PK PRIMARY KEY (ID),
+	CONSTRAINT CandidateStudies_CandidateId_FK FOREIGN KEY (CandidateId) REFERENCES Candidates(ID),
+	CONSTRAINT CandidateStudies_StudiesId_FK FOREIGN KEY (StudiesId) REFERENCES Studies(ID),
+
+);
+GO
+
+
+--many to many relationship
+CREATE TABLE [DreamJob].[dbo].[CandidateExperiences](
+    ID INT identity,
+    CandidateId INT,
+    ExperienceId INT,
+	CONSTRAINT CandidateExperiences_PK PRIMARY KEY (ID),
+	CONSTRAINT CandidateExperiences_CandidateId_FK FOREIGN KEY (CandidateId) REFERENCES Candidates(ID),
+	CONSTRAINT CandidateExperiences_ExperienceId_FK FOREIGN KEY (ExperienceId) REFERENCES Experiences(ID),
+);
+GO
+
+
+--INSERT INTO Roles ( RoleName)
+--VALUES ('Employer'), ('Candidate'), ('Admin')
+
+
+--UPDATE your_table
+--SET email = CONCAT(name, '.', surname, '@email.com')
+--FROM (
+--    SELECT name, surname
+--    FROM your_table
+--) AS subquery;
+
+
+
+--------------------------------------------------------------
+--CREATE TABLE FirstNames (
+--	ID int,
+--	PersonName nvarchar(100)
+--	CONSTRAINT  FirstNames_PK PRIMARY KEY (ID)
+--);
+--GO
+--CREATE TABLE Surnames(
+--	ID int,
+--	Surname nvarchar(100)
+--	CONSTRAINT Surnames_PK PRIMARY KEY (ID)
+--);
+--GO
+
+--CREATE PROCEDURE InsertNames
+--AS
+--BEGIN
+--    INSERT INTO FirstNames(PersonName)
+--        VALUES
+--		('Liam'), ('Olivia'), ('Noah'), ('Emma'), ('Oliver'), ('Ava'), ('Elijah'), ('Isabella'), ('Lucas'), ('Sophia'),
+--('Mason'), ('Mia'), ('Ethan'), ('Charlotte'), ('Aiden'), ('Amelia'), ('Caden'), ('Harper'), ('James'), ('Evelyn'),
+--('Benjamin'), ('Abigail'), ('Henry'), ('Emily'), ('Alexander'), ('Elizabeth'), ('Samuel'), ('Sofia'), ('Daniel'),
+--('Avery'), ('Matthew'), ('Ella'), ('William'), ('Scarlett'), ('Michael'), ('Grace'), ('Joseph'), ('Chloe'), ('David'),
+--('Victoria'), ('Carter'), ('Riley'), ('Gabriel'), ('Aria'), ('Owen'), ('Lily'), ('Wyatt'), ('Zoey'), ('Jack'),
+--('Penelope'), ('Caleb'), ('Layla'), ('Luke'), ('Nora'), ('Jayden'), ('Mila'), ('Dylan'), ('Aubrey'), ('Levi'),
+--('Brooklyn'), ('Isaac'), ('Harper'), ('Anthony'), ('Stella'), ('Joseph'), ('Maya'), ('Andrew'), ('Hannah'), ('Christopher'),
+--('Paisley'), ('Joshua'), ('Emilia'), ('John'), ('Ellie'), ('Daniel'), ('Skylar'), ('Grayson'), ('Zara'), ('Julian'),
+--('Addison'), ('Ryan'), ('Madeline'), ('Adam'), ('Alexa'), ('Nathan'), ('Leah'), ('Aaron'), ('Hazel'), ('Eli'),
+--('Violet'), ('Christian'), ('Aurora'), ('Isaac'), ('Savannah'), ('Charles'), ('Audrey'), ('Thomas'), ('Bella');
+    
+--END;
+--GO
+
+--CREATE PROCEDURE InsertSurnames
+--AS
+--BEGIN
+--    INSERT INTO Surnames (Surname)
+--        VALUES
+
+--('Smith'), ('Johnson'), ('Williams'), ('Brown'), ('Jones'), ('Miller'), ('Davis'), ('Garcia'), ('Rodriguez'), ('Wilson'),
+--('Martinez'), ('Anderson'), ('Taylor'), ('Thomas'), ('Hernandez'), ('Moore'), ('Martin'), ('Jackson'), ('Thompson'), ('White'),
+--('Lopez'), ('Lee'), ('Gonzalez'), ('Harris'), ('Clark'), ('Lewis'), ('Young'), ('Hall'), ('Turner'), ('King'),
+--('Wright'), ('Scott'), ('Green'), ('Adams'), ('Baker'), ('Nelson'), ('Hill'), ('Ramirez'), ('Campbell'), ('Mitchell'),
+--('Roberts'), ('Carter'), ('Phillips'), ('Evans'), ('Collins'), ('Stewart'), ('Sanchez'), ('Morris'), ('Rogers'), ('Reed'),
+--('Cook'), ('Morgan'), ('Bell'), ('Murphy'), ('Bailey'), ('Rivera'), ('Cooper'), ('Richardson'), ('Cox'), ('Howard'),
+--('Ward'), ('Torres'), ('Peterson'), ('Gray'), ('Ramirez'), ('James'), ('Watson'), ('Brooks'), ('Kelly'), ('Sanders'),
+--('Price'), ('Bennett'), ('Wood'), ('Barnes'), ('Ross'), ('Henderson'), ('Coleman'), ('Jenkins'), ('Perry'), ('Powell'),
+--('Long'), ('Patterson'), ('Hughes'), ('Flores'), ('Washington'), ('Butler'), ('Simmons'), ('Foster'), ('Gonzales'), ('Bryant');
+    
+--END;
+
+
+
+
+--DECLARE @InputString NVARCHAR(100) = 'Hello, World!';
+--DECLARE @HashValue VARBINARY(64) = HASHBYTES('SHA2_256', @InputString);
+
+--INSERT INTO Users (FirstName, Surname,Email,UserPassword)
+--SELECT N.PersonName, S.Surname, CONCAT(N.PersonName, '.', S.Surname, '@email.com'), @HashValue
+--FROM FirstNames N 
+--CROSS JOIN Surnames S 
+
+
+--TRUNCATE TABLE Users

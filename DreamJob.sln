@@ -20,9 +20,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UsefulCommands", "UsefulCommands", "{29C6AB84-F7F0-498F-86D8-E73E34990C13}"
 	ProjectSection(SolutionItems) = preProject
 		Scaffold.txt = Scaffold.txt
+		databaseScript.txt = databaseScript.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamJob.Common", "DreamJob.Common\DreamJob.Common.csproj", "{2B12C5EE-6626-4B7B-B097-313E3E0EFA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamJob.Common", "DreamJob.Common\DreamJob.Common.csproj", "{2B12C5EE-6626-4B7B-B097-313E3E0EFA2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

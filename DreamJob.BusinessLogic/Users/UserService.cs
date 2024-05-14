@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using DreamJob.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using DreamJob.DataAccess.EntityFramework;
-using DreamJob.BusinessLogic.Candidate.ViewModels;
 
 namespace DreamJob.BusinessLogic.Users
 {

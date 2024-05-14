@@ -21,4 +21,8 @@
     <ProjectReference Include="..\DreamJob.Entities\DreamJob.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Candidates\ViewModels\" />
+  </ItemGroup>
+
 </Project>
