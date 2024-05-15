@@ -15,5 +15,8 @@ namespace DreamJob.BusinessLogic.JobOffer.ViewModels
 
         public string JobDescription { get; set; } = null!;
 
+        public string Location { get; set; }
+        public string JobTitle { get; set; }
+        public string JobIndustry { get; set; }
     }
 }

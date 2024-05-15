@@ -14,7 +14,7 @@ namespace DreamJob.BusinessLogic.JobOffers
     {
 
         private readonly DreamJobContext _context;
-        public JobOfferService( DreamJobContext context)
+        public JobOfferService(DreamJobContext context)
         {
             _context = context;
         }
@@ -31,12 +31,52 @@ namespace DreamJob.BusinessLogic.JobOffers
             {
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
-                //TO DO 
-                //EmployerId = CurrentUser.Id
+                EmployerId = model.EmployerId,
+                Location = model.Location,
+                JobTitle = model.JobTitle,
+                JobIndustry = model.JobIndustry
             };
 
             _context.JobOffers.Add(jobOffer);
             _context.SaveChanges();
         }
+
+        public List<Entities.Entities.JobOffer> GetJobOffers()
+        {
+            return _context.JobOffers.ToList();
+        }
+
+        public Entities.Entities.JobOffer GetJobOffer(int id) {
+            var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
+            if (jobOffer == null) {
+                throw new Exception("Job offer not found");
+            }
+            return jobOffer;
+        }
+
+        public void DeleteJobOffer(int id) {
+            var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
+            if (jobOffer == null) {
+                throw new Exception("Job offer not found");
+            }
+            _context.JobOffers.Remove(jobOffer);
+            _context.SaveChanges();
+        }
+        
+        public void UpdateJobOffer(int id, CreateJobOfferViewModel model) {
+            var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
+            if (jobOffer == null) {
+                throw new Exception("Job offer not found");
+            }
+            jobOffer.Salary = model.Salary;
+            jobOffer.JobDescription = model.JobDescription;
+            jobOffer.EmployerId = model.EmployerId;
+            jobOffer.Location = model.Location;
+            jobOffer.JobTitle = model.JobTitle;
+            jobOffer.JobIndustry = model.JobIndustry;
+            _context.SaveChanges();
+        }
+
+
     }
 }

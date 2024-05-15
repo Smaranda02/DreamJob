@@ -17,7 +17,7 @@ namespace DreamJob.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateJobOffer()
         {
             var model = _jobOfferService.CreateJobOfferVM();
             return View(model);
@@ -26,8 +26,25 @@ namespace DreamJob.Controllers
         [HttpPost]
         public IActionResult AddJobOffer(CreateJobOfferViewModel model)
         {
-
             return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult EditJobOffer(int id, CreateJobOfferViewModel model) {
+            _jobOfferService.UpdateJobOffer(id, model);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteJobOffer(int id) {
+            var jobOffer = _jobOfferService.GetJobOffer(id);
+            return View(jobOffer);
+        }
+
+        [HttpGet]
+        public IActionResult ViewJobOffer(int id) {
+            var jobOffer = _jobOfferService.GetJobOffer(id);
+            return View(jobOffer);
         }
     }
 }
