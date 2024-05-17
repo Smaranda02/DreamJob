@@ -15,11 +15,11 @@ public partial class JobOffer
 
     public virtual Employer Employer { get; set; } = null!;
 
-    public string Location { get; set; } = null!;
+    // string? Location { get; set; } = null!;
 
-    public string JobTitle { get; set; } = null!;
+   // public string? JobTitle { get; set; } = null!;
 
-    public string JobIndustry { get; set; } = null!;
+    // public string? JobIndustry { get; set; } = null!;
 
 
     public virtual ICollection<Interaction> Interactions { get; } = new List<Interaction>();

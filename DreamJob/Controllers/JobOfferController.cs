@@ -26,6 +26,7 @@ namespace DreamJob.Controllers
         [HttpPost]
         public IActionResult AddJobOffer(CreateJobOfferViewModel model)
         {
+            _jobOfferService.CreateJobOffer(model);
             return Ok();
         }
 

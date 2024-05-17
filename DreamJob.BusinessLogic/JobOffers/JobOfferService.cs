@@ -31,10 +31,10 @@ namespace DreamJob.BusinessLogic.JobOffers
             {
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
-                EmployerId = model.EmployerId,
-                Location = model.Location,
-                JobTitle = model.JobTitle,
-                JobIndustry = model.JobIndustry
+                EmployerId = 1,
+                //Location = model.Location,
+                //JobTitle = model.JobTitle,
+                //JobIndustry = model.JobIndustry
             };
 
             _context.JobOffers.Add(jobOffer);
@@ -49,7 +49,7 @@ namespace DreamJob.BusinessLogic.JobOffers
         public Entities.Entities.JobOffer GetJobOffer(int id) {
             var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             if (jobOffer == null) {
-                throw new Exception("Job offer not found");
+              //  throw new Exception("Job offer not found");
             }
             return jobOffer;
         }
@@ -71,9 +71,9 @@ namespace DreamJob.BusinessLogic.JobOffers
             jobOffer.Salary = model.Salary;
             jobOffer.JobDescription = model.JobDescription;
             jobOffer.EmployerId = model.EmployerId;
-            jobOffer.Location = model.Location;
-            jobOffer.JobTitle = model.JobTitle;
-            jobOffer.JobIndustry = model.JobIndustry;
+            //jobOffer.Location = model.Location;
+            //jobOffer.JobTitle = model.JobTitle;
+            //jobOffer.JobIndustry = model.JobIndustry;
             _context.SaveChanges();
         }
 
