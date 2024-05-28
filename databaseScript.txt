@@ -52,6 +52,8 @@ CREATE TABLE [DreamJob].[dbo].[Employers](
     EmployerDescription nvarchar(max) NOT NULL,
 	EmployerLinkedin VARCHAR(100) NOT NULL,
 	CONSTRAINT Emlpoyer_PK PRIMARY KEY (ID),
+	CONSTRAINT Candidates_UserId_FK FOREIGN KEY (UserId) REFERENCES Users(ID),   
+
 );
 GO
 

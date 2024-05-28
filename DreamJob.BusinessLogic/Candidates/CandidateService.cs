@@ -8,6 +8,7 @@ using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
+using DreamJob.BusinessLogic.Users.ViewModels;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -31,10 +32,20 @@ namespace DreamJob.BusinessLogic.Candidates
         public void Register(RegisterViewModel model)
         {
             // var hashedPassword = HashPassword(model.Password);
+            model.Role = (int)Roles.Candidate;
+            var username = model.FirstName.ToLower() + model.Surname.ToLower();
 
-            var newUser = _userService.CreateUser(model);
+            var userVM = new UserViewModel
+            {
+                Email = model.Email,
+                Password = model.Password,
+                Role = model.Role,
+                Username = username,
+            };
 
-            var newCandidate = new Entities.Entities.Candidate
+            var newUser = _userService.CreateUser(userVM);
+
+            var newCandidate = new Candidate
             {
                 FirstName = model.FirstName,
                 Surname = model.Surname,

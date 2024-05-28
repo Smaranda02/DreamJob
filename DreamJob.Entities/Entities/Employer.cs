@@ -15,7 +15,11 @@ public partial class Employer
 
     public string EmployerLinkedin { get; set; } = null!;
 
+    public int UserId { get; set; }
+
     public virtual ICollection<EmployersCareerField> EmployersCareerFields { get; } = new List<EmployersCareerField>();
 
     public virtual ICollection<JobOffer> JobOffers { get; } = new List<JobOffer>();
+
+    public virtual User User { get; set; } = null!;
 }

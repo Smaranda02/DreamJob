@@ -22,9 +22,14 @@ namespace DreamJob.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid) { }
-            _employerService.Register(model);
-            return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                _employerService.Register(model);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+           
         }
 
 
