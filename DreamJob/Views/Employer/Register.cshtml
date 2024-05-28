@@ -17,6 +17,21 @@
         <input asp-for="EmployerName"/>
     </div>
 
+     <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email"/>
+    </div>
+
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password"/>
+    </div>
+
+    <div>
+        <label asp-for="ConfirmPassword">Confirm your password</label>
+        <input asp-for="ConfirmPassword" />
+    </div>
+
     <div>
         <label asp-for="OfficeLocation">Office Location</label>
         <input asp-for="OfficeLocation"/>
@@ -30,5 +45,28 @@
     <div>
         <label asp-for="EmployerLinkedin">Linkedin</label>
         <input asp-for="EmployerLinkedin" />
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        if(ViewData.ModelState[string.Empty] != null)
+        {
+            <div class="errror-summary">
+                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                {
+                    <div class="error-item text-danger">
+                        @error.ErrorMessage
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    <div>
+        <input type="submit" value="Register" />
+    </div>
+
+    <div>
+        <a asp-action="Login" asp-controller="Login">Back</a>
     </div>
 </form>

@@ -10,15 +10,19 @@ using DreamJob.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
+using AutoMapper;
 
 namespace DreamJob.BusinessLogic.Users
 {
     public class UserService
     {
         private DreamJobContext _context;
-        public UserService(DreamJobContext context)
+        private readonly IMapper _mapper;
+
+        public UserService(DreamJobContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
       
@@ -38,19 +42,19 @@ namespace DreamJob.BusinessLogic.Users
         //    return hashed;
         //}
 
-        public bool Login(LoginViewModel model)
+        public CurrentUserViewModel Login(LoginViewModel model)
         {
             var user = _context.Users.
                                 Where(u =>  u.Email == model.Email &&
                                 u.UserPassword == model.Password)
                                 .FirstOrDefault();
-            if (user != null)
+            if (user == null)
             {
-                //add claims 
-                return true;
+                return new CurrentUserViewModel { IsAuthenticated = false };
             }
-           
-            return false;
+
+            var currentUser = _mapper.Map<User, CurrentUserViewModel>(user);
+            return currentUser;
         }
 
         public LoginViewModel CreateLoginVM()
@@ -59,13 +63,14 @@ namespace DreamJob.BusinessLogic.Users
             return model;
         }
 
-        public User CreateUser(RegisterViewModel model)
+        public User CreateUser(UserViewModel model)
         {
             var newUser = new User
             {
                 Email = model.Email,
                 UserPassword = model.Password,
-                RoleId = (int?)Roles.Candidate,
+                RoleId = model.Role,
+                Username = model.Username
             };
 
             return newUser;
