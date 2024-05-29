@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using DreamJob.Entities;
 using DreamJob.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Mvc;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -20,22 +21,34 @@ namespace DreamJob.BusinessLogic.JobOffers
             _context = context;
         }
 
-        public CreateJobOfferViewModel CreateJobOfferVM()
-        {
+        public CreateJobOfferViewModel CreateJobOfferVM() {
             var model = new CreateJobOfferViewModel();
+            var skills = _context.Skills.ToList();
+            foreach (var skill in skills) {
+                model.SelectedSkills.Add(new SelectListItem {
+
+                    Text = skill.SkillName,
+                    Value = skill.Id.ToString()
+                });
+            }
             return model;
         }
 
-        public void CreateJobOffer(CreateJobOfferViewModel model)
-        {
-            var jobOffer = new Entities.Entities.JobOffer
-            {
+        public void CreateJobOffer(CreateJobOfferViewModel model) {
+            var jobOffer = new Entities.Entities.JobOffer {
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
                 EmployerId = 1,
             };
-
             _context.JobOffers.Add(jobOffer);
+            _context.SaveChanges();
+            foreach (var skill in model.SelectedSkills) {
+                var jobSkill = new Entities.Entities.JobSkill {
+                    JobOfferId = jobOffer.Id,
+                    SkillId = int.Parse(skill.Value)
+                };
+                _context.JobSkills.Add(jobSkill);
+            }
             _context.SaveChanges();
         }
 

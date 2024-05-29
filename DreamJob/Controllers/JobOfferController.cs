@@ -31,6 +31,7 @@ namespace DreamJob.Controllers
         {
             _jobOfferService.CreateJobOffer(model);
             return Ok();
+            
         }
 
         [HttpPost]

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DreamJob.BusinessLogic.JobOffer.ViewModels
 {
@@ -14,9 +15,6 @@ namespace DreamJob.BusinessLogic.JobOffer.ViewModels
         public decimal Salary { get; set; }
 
         public string JobDescription { get; set; } = null!;
-
-        //public string? Location { get; set; }
-        //public string? JobTitle { get; set; }
-        //public string? JobIndustry { get; set; }
+        public List<SelectListItem> SelectedSkills { get; set; } = new List<SelectListItem>();
     }
 }
