@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace DreamJob.BusinessLogic.Users
 {
@@ -18,11 +20,14 @@ namespace DreamJob.BusinessLogic.Users
     {
         private DreamJobContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserService(DreamJobContext context, IMapper mapper)
+
+        public UserService(DreamJobContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
       
@@ -74,6 +79,26 @@ namespace DreamJob.BusinessLogic.Users
             };
 
             return newUser;
+        }
+
+
+        public CurrentUserViewModel GetCurrentUser()
+        {
+            var user = _httpContextAccessor.HttpContext.User;
+            if (user == null || !user.Identity.IsAuthenticated)
+            {
+                return new CurrentUserViewModel { IsAuthenticated = false };
+            }
+
+            return new CurrentUserViewModel
+            {
+                Id = int.Parse(user.FindFirstValue("Id")),
+                IsAuthenticated = user.Identity.IsAuthenticated,
+                Email = user.FindFirstValue(ClaimTypes.Email),
+                Username = user.FindFirstValue("Username"),
+                Role = user.FindFirstValue(ClaimTypes.Role),
+            };
+
         }
     }
 }

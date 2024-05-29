@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace DreamJob.BusinessLogic.Candidates.ViewModels
 {
@@ -20,6 +22,10 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
         public string Linkedin { get; set; } = null!;
 
         public int Role { get; set; }
+
+        public IEnumerable<SelectListItem> Skills { get; set; }
+        public List<int> SelectedSkillIds { get; set; } = new List<int>();
+
 
     }
 }

@@ -9,6 +9,8 @@ using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users.ViewModels;
+using DreamJob.BusinessLogic.Skills;
+using System.Web.Mvc;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -16,21 +18,27 @@ namespace DreamJob.BusinessLogic.Candidates
     {
         private readonly DreamJobContext _context;
         private readonly UserService _userService;
+        private readonly SkillsService _skillsService;
 
-        public CandidateService(DreamJobContext context, UserService userService)
+        public CandidateService(DreamJobContext context, UserService userService, SkillsService skillsService)
         {
             _context = context;
             _userService = userService;
+            _skillsService = skillsService;
         }
 
         public RegisterViewModel CreateRegisterVM()
         {
+            var skills = _skillsService.GetDefaultSkills();
             var model = new RegisterViewModel();
+            model.Skills = skills;
             return model;
         }
 
         public void Register(RegisterViewModel model)
         {
+
+            
             // var hashedPassword = HashPassword(model.Password);
             model.Role = (int)Roles.Candidate;
             var username = model.FirstName.ToLower() + model.Surname.ToLower();
@@ -59,5 +67,6 @@ namespace DreamJob.BusinessLogic.Candidates
             _context.SaveChanges();
 
         }
+
     }
 }

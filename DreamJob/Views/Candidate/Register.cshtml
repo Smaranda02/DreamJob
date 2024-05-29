@@ -50,18 +50,25 @@
         <input asp-for="CandidateDescription" />
      </div>
 
-                                            <div>
-                                                <label asp-for="Linkedin">Linkedin Account</label>
-                                                <input asp-for="Linkedin"/>
-                                            </div>
+     <div>
+        <label asp-for="Linkedin">Linkedin Account</label>
+        <input asp-for="Linkedin"/>
+     </div>
 
-
-@*
-    <div>
-        <label>Birthday</label>
-        <input />
-    </div>*@
-
+    @if (!ViewData.ModelState.IsValid)
+    {
+        if (ViewData.ModelState[string.Empty] != null)
+        {
+                    <div class="errror-summary">
+                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                {
+                                <div class="error-item text-danger">
+                        @error.ErrorMessage
+                                </div>
+                }
+                    </div>
+        }
+    }
 
     <div>
         <input type="submit" value="Register"/>
