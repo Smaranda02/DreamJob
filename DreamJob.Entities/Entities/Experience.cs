@@ -15,5 +15,7 @@ public partial class Experience
 
     public string ExperienceDescription { get; set; } = null!;
 
-    public virtual ICollection<CandidateExperience> CandidateExperiences { get; } = new List<CandidateExperience>();
+    public int? CandidateId { get; set; }
+
+    public virtual Candidate? Candidate { get; set; }
 }

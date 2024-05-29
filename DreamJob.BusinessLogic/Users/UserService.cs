@@ -10,15 +10,24 @@ using DreamJob.Common.Enums;
 using Microsoft.EntityFrameworkCore;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace DreamJob.BusinessLogic.Users
 {
     public class UserService
     {
         private DreamJobContext _context;
-        public UserService(DreamJobContext context)
+        private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+        public UserService(DreamJobContext context, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
         }
 
       
@@ -38,19 +47,19 @@ namespace DreamJob.BusinessLogic.Users
         //    return hashed;
         //}
 
-        public bool Login(LoginViewModel model)
+        public CurrentUserViewModel Login(LoginViewModel model)
         {
             var user = _context.Users.
                                 Where(u =>  u.Email == model.Email &&
                                 u.UserPassword == model.Password)
                                 .FirstOrDefault();
-            if (user != null)
+            if (user == null)
             {
-                //add claims 
-                return true;
+                return new CurrentUserViewModel { IsAuthenticated = false };
             }
-           
-            return false;
+
+            var currentUser = _mapper.Map<User, CurrentUserViewModel>(user);
+            return currentUser;
         }
 
         public LoginViewModel CreateLoginVM()
@@ -59,16 +68,39 @@ namespace DreamJob.BusinessLogic.Users
             return model;
         }
 
-        public User CreateUser(RegisterViewModel model)
+        public User CreateUser(UserViewModel model)
         {
             var newUser = new User
             {
                 Email = model.Email,
                 UserPassword = model.Password,
-                RoleId = (int?)Roles.Candidate,
+                RoleId = model.Role,
+                Username = model.Username
             };
 
             return newUser;
+        }
+
+
+        public CurrentUserViewModel GetCurrentUser()
+        {
+            var user = _httpContextAccessor.HttpContext.User;
+            if (user == null || !user.Identity.IsAuthenticated)
+            {
+                return new CurrentUserViewModel { IsAuthenticated = false };
+            }
+
+            Enum.TryParse<Roles>(user.FindFirstValue(ClaimTypes.Role), out var roleEnum);
+
+            return new CurrentUserViewModel
+            {
+                Id = int.Parse(user.FindFirstValue("Id")),
+                IsAuthenticated = user.Identity.IsAuthenticated,
+                Email = user.FindFirstValue(ClaimTypes.Email),
+                Username = user.FindFirstValue("Username"),
+                Role = (int)roleEnum,
+            };
+
         }
     }
 }

@@ -1,24 +1,11 @@
 ﻿
-@{
-}
-
 @model DreamJob.BusinessLogic.Candidates.ViewModels.RegisterViewModel;
 
-  @*  public virtual ICollection<CandidateExperience> CandidateExperiences { get; } = new List<CandidateExperience>();
-
-    public virtual ICollection<CandidateSkill> CandidateSkills { get; } = new List<CandidateSkill>();
-
-    public virtual ICollection<CandidateStudy> CandidateStudies { get; } = new List<CandidateStudy>();
-
-    public virtual ICollection<CandidatesCareerField> CandidatesCareerFields { get; } = new List<CandidatesCareerField>();
-
-    public virtual ICollection<Interaction> Interactions { get; } = new List<Interaction>();
-*@
 <h1>
     Register as a job seeker
 </h1>
 
-<form asp-action="Register" asp-controller="User">
+<form asp-action="Register" asp-controller="Candidate">
     <div>
         <label asp-for="@Model.FirstName">Firstname</label>
         <input asp-for="@Model.FirstName" />
@@ -39,34 +26,54 @@
         <input asp-for="Password"/>
     </div>
 
-   @* <div>
-        <label>Confirm your password</label>
-        <input />
-    </div>*@
+    
+    <div>
+        <label asp-for="ConfirmPassword">Confirm your password</label>
+        <input asp-for="ConfirmPassword"/>
+    </div>
 
      <div>
         <label asp-for="CandidateDescription">Description about yourself</label>
         <input asp-for="CandidateDescription" />
      </div>
 
-                                            <div>
-                                                <label asp-for="Linkedin">Linkedin Account</label>
-                                                <input asp-for="Linkedin"/>
-                                            </div>
-
-
-@*
     <div>
-        <label>Birthday</label>
-        <input />
-    </div>*@
+        <label asp-for="Linkedin">Linkedin Account</label>
+        <input asp-for="Linkedin" />
+    </div>
 
+
+    <div>
+        <label asp-for="SelectedSkillIds" class="control-label">Skills</label>
+        <select asp-for="SelectedSkillIds" class="form-control" multiple="multiple">
+           <option value="">-- Select Skill --</option>
+            @foreach (var skill in Model.Skills)
+            {
+                <option value="@skill.Value">@skill.Text</option>
+            }
+        </select>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        if (ViewData.ModelState[string.Empty] != null)
+        {
+                    <div class="errror-summary">
+                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                {
+                                <div class="error-item text-danger">
+                        @error.ErrorMessage
+                                </div>
+                }
+                    </div>
+        }
+    }
 
     <div>
         <input type="submit" value="Register"/>
     </div>
 
     <div>
-        <a asp-action="Login" asp-controller="Login">Back</a>
+        <a asp-action="Login" asp-controller="User">Back</a>
     </div>
 </form>

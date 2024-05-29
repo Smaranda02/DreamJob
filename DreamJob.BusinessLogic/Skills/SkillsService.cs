@@ -3,6 +3,7 @@ using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.Entities.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
