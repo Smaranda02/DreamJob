@@ -37,5 +37,14 @@ namespace DreamJob.BusinessLogic.Employers
             _context.Employers.Add(employer);
             _context.SaveChanges();
         }
+
+        // create a getEmployerById method
+        public Entities.Entities.Employer GetEmployerById(int id) {
+            var employer = _context.Employers.FirstOrDefault(x => x.Id == id);
+            if (employer == null) {
+                throw new Exception("Employer not found");
+            }
+            return employer;
+        }
     }
 }

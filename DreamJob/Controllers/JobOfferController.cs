@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DreamJob.BusinessLogic.JobOffer.ViewModels;
 using DreamJob.BusinessLogic.JobOffers;
+using DreamJob.BusinessLogic.Employers;
 
 namespace DreamJob.Controllers
 {
     public class JobOfferController : Controller
     {
         private JobOfferService _jobOfferService;
+        private EmployerService _employerService;
+
         public JobOfferController(JobOfferService jobOfferService)
         {
             _jobOfferService = jobOfferService;
@@ -46,6 +49,12 @@ namespace DreamJob.Controllers
         public IActionResult ViewJobOffer(int id) {
             var jobOffer = _jobOfferService.GetJobOffer(id);
             return View(jobOffer);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllJobOffers() {
+            var jobOffers = _jobOfferService.GetJobOffers();
+            return View(jobOffers);
         }
     }
 }

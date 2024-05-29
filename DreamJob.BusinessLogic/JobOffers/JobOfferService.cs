@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DreamJob.Entities;
 using DreamJob.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -32,9 +33,6 @@ namespace DreamJob.BusinessLogic.JobOffers
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
                 EmployerId = 1,
-                //Location = model.Location,
-                //JobTitle = model.JobTitle,
-                //JobIndustry = model.JobIndustry
             };
 
             _context.JobOffers.Add(jobOffer);
@@ -43,7 +41,8 @@ namespace DreamJob.BusinessLogic.JobOffers
 
         public List<Entities.Entities.JobOffer> GetJobOffers()
         {
-            return _context.JobOffers.ToList();
+            var jobOffers = _context.JobOffers.Include(j => j.Employer).ToList();
+            return jobOffers;
         }
 
         public Entities.Entities.JobOffer GetJobOffer(int id) {
