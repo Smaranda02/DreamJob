@@ -3,6 +3,8 @@ using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -38,7 +40,7 @@ namespace DreamJob.Controllers
             }
         }
 
-        public void AddClaimsToUser(CurrentUserViewModel model)
+        public async void AddClaimsToUser(CurrentUserViewModel model)
         {
             List<Claim> claims = new List<Claim>
             {
@@ -46,8 +48,25 @@ namespace DreamJob.Controllers
                 new Claim("Id", model.Id.ToString()),
                 //new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Email, model.Email),
-                new Claim(ClaimTypes.Role, Enum.GetName(typeof(Roles), model.Role)),
+                new Claim(ClaimTypes.Role, model.Role),
             };
+
+            var claimsIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            var x = User.Identity.IsAuthenticated;
+
+        }
+
+
+        public async Task<IActionResult> Logout()
+        {
+            if(User.Identity.IsAuthenticated == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "User");
 
         }
     }

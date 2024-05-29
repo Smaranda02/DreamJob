@@ -25,7 +25,7 @@ namespace DreamJob.Controllers
             if (ModelState.IsValid)
             {
                 _employerService.Register(model);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "User");
             }
 
             return View(model);
