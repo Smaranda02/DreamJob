@@ -30,7 +30,7 @@ namespace DreamJob.Controllers
             if (ModelState.IsValid)
             {
                 _candidateService.Register(model);
-                return View("Login", "User");
+                return RedirectToAction("Login", "User");
             }
             else
             {

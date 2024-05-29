@@ -1,4 +1,7 @@
-﻿using DreamJob.DataAccess.EntityFramework;
+﻿using DreamJob.BusinessLogic.Candidates.ViewModels;
+using DreamJob.BusinessLogic.Users;
+using DreamJob.DataAccess.EntityFramework;
+using DreamJob.Entities.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,10 +16,12 @@ namespace DreamJob.BusinessLogic.Skills
     {
 
         private DreamJobContext _context;
+        private UserService _userService;
 
-        public SkillsService(DreamJobContext context)
+        public SkillsService(DreamJobContext context, UserService userService)
         {
             _context= context;
+            _userService = userService;
         }
 
         public List<SelectListItem> GetDefaultSkills()
@@ -30,6 +35,24 @@ namespace DreamJob.BusinessLogic.Skills
                     Value = s.SkillId.ToString(),
                 })
                 .ToList();
+        }
+
+
+        public List<CandidateSkill> CreateCandidateSkill(List<int> skills, Candidate candidate)
+        {
+            var candidateSkills = new List<CandidateSkill>();
+            foreach(var skill in skills)
+            {
+                var candidateSkillVM = new CandidateSkill
+                {
+                    SkillId = skill,
+                    CandidateId = candidate.Id,
+                    Candidate = candidate
+                };
+                candidateSkills.Add(candidateSkillVM);
+            }
+
+            return candidateSkills;
         }
     }
 }

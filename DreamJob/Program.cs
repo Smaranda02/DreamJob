@@ -37,6 +37,8 @@ builder.Services.AddScoped<JobOfferService>();
 builder.Services.AddScoped<EmployerService>();
 builder.Services.AddScoped<CandidateService>();
 builder.Services.AddScoped<SkillsService>();
+builder.Services.AddScoped<RegisterValidator>();
+
 
 builder.Services.AddScoped(s =>
 {
