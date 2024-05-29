@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using DreamJob.Entities;
 using DreamJob.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using DreamJob.BusinessLogic.Skills;
 
 namespace DreamJob.BusinessLogic.JobOffers
@@ -35,10 +35,13 @@ namespace DreamJob.BusinessLogic.JobOffers
         }
 
         public void CreateJobOffer(CreateJobOfferViewModel model) {
+            // find the employer that has the same name as username from the model
+            var employer = _context.Employers.FirstOrDefault(x => x.EmployerName == model.Username);
             var jobOffer = new Entities.Entities.JobOffer {
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
-                EmployerId = 1,
+                EmployerId = employer.Id
+
             };
 
             var jobSkills = _skillsService.CreateJobSkill(model.SkillIds, jobOffer);

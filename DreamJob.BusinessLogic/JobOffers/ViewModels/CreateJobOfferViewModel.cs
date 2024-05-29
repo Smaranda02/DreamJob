@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DreamJob.BusinessLogic.JobOffer.ViewModels
 {
@@ -18,5 +18,7 @@ namespace DreamJob.BusinessLogic.JobOffer.ViewModels
         public List<SelectListItem> SelectedSkills { get; set; } = new List<SelectListItem>();
 
         public List<int> SkillIds { get; set; } = new List<int>();
+
+        public string Username { get; set; } = null!;   
     }
 }

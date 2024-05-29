@@ -5,10 +5,15 @@
 }
 
 @model DreamJob.BusinessLogic.JobOffer.ViewModels.CreateJobOfferViewModel;
+@inject DreamJob.BusinessLogic.Users.ViewModels.CurrentUserViewModel CurrentUserViewModel;
 
 
 
 <form asp-action="AddJobOffer" asp-controller="JobOffer">
+    You are user @CurrentUserViewModel.Username
+
+    <input type="hidden" asp-for="Username" value="@CurrentUserViewModel.Username" />"
+
     <div>
         <label asp-for="Salary"> Salary</label>
         <input asp-for="Salary"/>

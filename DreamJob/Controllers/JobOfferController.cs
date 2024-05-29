@@ -2,6 +2,8 @@
 using DreamJob.BusinessLogic.JobOffer.ViewModels;
 using DreamJob.BusinessLogic.JobOffers;
 using DreamJob.BusinessLogic.Employers;
+using DreamJob.BusinessLogic.Users.ViewModels;
+
 
 namespace DreamJob.Controllers
 {

@@ -27,6 +27,24 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                        @if (CurrentUserViewModel.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <p>Hello @CurrentUserViewModel.Username !</p>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Register">Register as a Candidate</a>
                         </li>
@@ -36,6 +54,10 @@
                          <li class="nav-item">
                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                         </li>
+
+
+
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="CreateJobOffer">Create Job Offer</a>
                         </li>
