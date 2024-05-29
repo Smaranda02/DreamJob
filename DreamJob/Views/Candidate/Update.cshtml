@@ -1,0 +1,63 @@
+﻿@model DreamJob.BusinessLogic.Candidates.ViewModels.UpdateCandidateViewModel;
+
+<h1>
+    Complete your profile and keep it updated!
+</h1>
+
+<form asp-action="Update" asp-controller="Candidate">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label asp-for="@Model.FirstName">Firstname</label>
+        <input asp-for="@Model.FirstName" />
+    </div>
+
+    <div>
+        <label asp-for="Surname">Surname</label>
+        <input asp-for="Surname" />
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" />
+    </div>
+
+    <div>
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" />
+    </div>
+
+    <div>
+        <label asp-for="CandidateDescription">Description about yourself</label>
+        <input asp-for="CandidateDescription" />
+    </div>
+
+    <div>
+        <label asp-for="Linkedin">Linkedin Account</label>
+        <input asp-for="Linkedin" />
+    </div>
+
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        if (ViewData.ModelState[string.Empty] != null)
+        {
+            <div class="errror-summary">
+                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                {
+                    <div class="error-item text-danger">
+                        @error.ErrorMessage
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+
+    <div>
+        <a asp-action="Index" asp-controller="Home">Back</a>
+    </div>
+</form>

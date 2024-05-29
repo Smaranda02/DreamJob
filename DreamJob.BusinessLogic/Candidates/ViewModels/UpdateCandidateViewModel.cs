@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DreamJob.BusinessLogic.Experiences.ViewModels;
+using DreamJob.BusinessLogic.Studies.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +16,15 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
         public string Surname { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public string ConfirmPassword { get; set; } = null!;
-
         public string CandidateDescription { get; set; } = null!;
-
         public string Linkedin { get; set; } = null!;
-
-        public int Role { get; set; }
 
         public List<SelectListItem> Skills { get; set; } = new List<SelectListItem>();
         public List<int> SelectedSkillIds { get; set; } = new List<int>();
 
+        public List<StudyViewModel> Studies { get; set; }
+
+        public List<ExperienceViewModel> Experiences { get; set; }
 
 
 

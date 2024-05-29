@@ -50,7 +50,7 @@ namespace DreamJob.Controllers
                 new Claim("Id", model.Id.ToString()),
                 //new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Email, model.Email),
-                new Claim(ClaimTypes.Role, model.Role),
+                new Claim(ClaimTypes.Role, Enum.GetName(typeof(Roles), model.Role)),
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");

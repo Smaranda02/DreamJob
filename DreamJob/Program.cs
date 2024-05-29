@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using DreamJob.BusinessLogic.Skills;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using System.Security.Claims;
+using DreamJob.Common.Enums;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,8 @@ builder.Services.AddScoped(s =>
         var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
         var username = claims.FirstOrDefault(c => c.Type == "Username")?.Value;
         var role = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+        Enum.TryParse<Roles>(role, out var roleEnum);
+
 
         return new CurrentUserViewModel
         {
@@ -58,7 +61,7 @@ builder.Services.AddScoped(s =>
             IsAuthenticated = true,
             Email = email,
             Username = username,
-            Role = role,
+            Role = (int)roleEnum,
         };
     }
     return new CurrentUserViewModel { IsAuthenticated = false };

@@ -11,7 +11,7 @@ namespace DreamJob.BusinessLogic.Users.ViewModels
         public int Id { get; set; }
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
-        public string Role { get; set; }
+        public int? Role { get; set; }
 
         public string Username { get; set; }
         public bool IsAuthenticated { get; set; }

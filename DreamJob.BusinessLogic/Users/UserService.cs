@@ -90,13 +90,15 @@ namespace DreamJob.BusinessLogic.Users
                 return new CurrentUserViewModel { IsAuthenticated = false };
             }
 
+            Enum.TryParse<Roles>(user.FindFirstValue(ClaimTypes.Role), out var roleEnum);
+
             return new CurrentUserViewModel
             {
                 Id = int.Parse(user.FindFirstValue("Id")),
                 IsAuthenticated = user.Identity.IsAuthenticated,
                 Email = user.FindFirstValue(ClaimTypes.Email),
                 Username = user.FindFirstValue("Username"),
-                Role = user.FindFirstValue(ClaimTypes.Role),
+                Role = (int)roleEnum,
             };
 
         }

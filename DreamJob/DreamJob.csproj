@@ -27,8 +27,4 @@
     <ProjectReference Include="..\DreamJob.DataAccess\DreamJob.DataAccess.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Candidate\" />
-  </ItemGroup>
-
 </Project>
