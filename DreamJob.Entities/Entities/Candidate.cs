@@ -17,15 +17,15 @@ public partial class Candidate
 
     public string Linkedin { get; set; } = null!;
 
-    public virtual ICollection<CandidateExperience> CandidateExperiences { get; } = new List<CandidateExperience>();
-
     public virtual ICollection<CandidateSkill> CandidateSkills { get; } = new List<CandidateSkill>();
-
-    public virtual ICollection<CandidateStudy> CandidateStudies { get; } = new List<CandidateStudy>();
 
     public virtual ICollection<CandidatesCareerField> CandidatesCareerFields { get; } = new List<CandidatesCareerField>();
 
+    public virtual ICollection<Experience> Experiences { get; } = new List<Experience>();
+
     public virtual ICollection<Interaction> Interactions { get; } = new List<Interaction>();
+
+    public virtual ICollection<Study> Studies { get; } = new List<Study>();
 
     public virtual User User { get; set; } = null!;
 }

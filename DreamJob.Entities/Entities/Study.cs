@@ -15,5 +15,7 @@ public partial class Study
 
     public DateTime EndYear { get; set; }
 
-    public virtual ICollection<CandidateStudy> CandidateStudies { get; } = new List<CandidateStudy>();
+    public int? CandidateId { get; set; }
+
+    public virtual Candidate? Candidate { get; set; }
 }

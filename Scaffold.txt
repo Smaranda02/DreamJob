@@ -8,7 +8,9 @@ Migration commands :
 1. Add-Migration "Initial migration" -Context EFCoreContext;
 2. Update-Database.
 
+Scaffold-DbContext -Provider Microsoft.EntityFrameworkCore.SqlServer -Connection "Server=tcp:dreamjob.database.windows.net,1433;Initial Catalog=DreamJob;Persist Security Info=False;User ID=stefan;Password=ADMINPA55!;
+MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;" -OutputDir "Entities" -ContextDir "EntityFramework" -f
 
-
-
-
+TO DO 
+Everything async 
+Solve the logged in user after stop problem 

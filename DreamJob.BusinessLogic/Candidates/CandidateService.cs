@@ -11,6 +11,8 @@ using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using DreamJob.BusinessLogic.Skills;
 using System.Web.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -19,12 +21,16 @@ namespace DreamJob.BusinessLogic.Candidates
         private readonly DreamJobContext _context;
         private readonly UserService _userService;
         private readonly SkillsService _skillsService;
+        private CurrentUserViewModel currentUser;
+        private readonly IMapper _mapper;
 
-        public CandidateService(DreamJobContext context, UserService userService, SkillsService skillsService)
+        public CandidateService(DreamJobContext context, UserService userService, SkillsService skillsService, IMapper mapper)
         {
             _context = context;
             _userService = userService;
             _skillsService = skillsService;
+            currentUser = _userService.GetCurrentUser();
+            _mapper = mapper;
         }
 
         public RegisterViewModel CreateRegisterVM()
@@ -36,6 +42,7 @@ namespace DreamJob.BusinessLogic.Candidates
             };
             return model;
         }
+
 
         public void Register(RegisterViewModel model)
         {
@@ -69,6 +76,40 @@ namespace DreamJob.BusinessLogic.Candidates
             _context.CandidateSkills.AddRange(candidateSkills);
             _context.SaveChanges();
 
+        }
+
+
+        public UpdateCandidateViewModel GetUpdateCandidateVM()
+        {
+            var user =  _context.Candidates
+                                .Include(c => c.User)
+                                .Where(c => c.UserId == currentUser.Id)
+                                .FirstOrDefault();
+
+            var userToUpdate = _mapper.Map<Candidate, UpdateCandidateViewModel>(user);
+
+            return userToUpdate;
+        }
+
+        public void Update(UpdateCandidateViewModel model)
+        {
+            var candidate = _mapper.Map<UpdateCandidateViewModel, Candidate>(model);
+
+            var user = new User
+            {
+                Id = currentUser.Id,
+                Email = model.Email,
+                UserPassword = model.Password,
+                RoleId = currentUser.Role,
+                Username = currentUser.Username
+            };
+
+            candidate.User = user;
+            candidate.UserId = currentUser.Id;
+
+            _context.Users.Update(user);
+            _context.Candidates.Update(candidate);
+            _context.SaveChanges();
         }
 
        

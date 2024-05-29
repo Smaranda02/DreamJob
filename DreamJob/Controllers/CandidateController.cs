@@ -38,5 +38,22 @@ namespace DreamJob.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Update()
+        {
+            var model = _candidateService.GetUpdateCandidateVM();
+            return View(model);
+        }
+
+        [HttpPost]  
+        public IActionResult Update(UpdateCandidateViewModel model)
+        {
+            //if (ModelState.IsValid)
+            {
+                _candidateService.Update(model);
+                return RedirectToAction("Index", "Home");
+            }
+            //return View(model);
+        }
     }
 }
