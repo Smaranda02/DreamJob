@@ -37,6 +37,7 @@ namespace DreamJob.BusinessLogic.Candidates
             return model;
         }
 
+
         public void Register(RegisterViewModel model)
         {
             // var hashedPassword = HashPassword(model.Password);

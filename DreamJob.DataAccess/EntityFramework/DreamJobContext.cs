@@ -18,11 +18,7 @@ public partial class DreamJobContext : DbContext
 
     public virtual DbSet<Candidate> Candidates { get; set; }
 
-    public virtual DbSet<CandidateExperience> CandidateExperiences { get; set; }
-
     public virtual DbSet<CandidateSkill> CandidateSkills { get; set; }
-
-    public virtual DbSet<CandidateStudy> CandidateStudies { get; set; }
 
     public virtual DbSet<CandidatesCareerField> CandidatesCareerFields { get; set; }
 
@@ -50,9 +46,7 @@ public partial class DreamJobContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        =>
-    //optionsBuilder.UseSqlServer("Server=DESKTOP-9E5HMJQ\\SQL_SERVER;Initial Catalog=DreamJob;Integrated Security=true;\nTrustServerCertificate= true;");
-    optionsBuilder.UseSqlServer("Server=tcp:dreamjob.database.windows.net,1433;Initial Catalog=DreamJob;Persist Security Info=False;User ID=stefan;Password=ADMINPA55!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=tcp:dreamjob.database.windows.net,1433;Initial Catalog=DreamJob;Persist Security Info=False;User ID=stefan;Password=ADMINPA55!;\nMultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,21 +67,6 @@ public partial class DreamJobContext : DbContext
                 .HasConstraintName("Candidates_UserId_FK");
         });
 
-        modelBuilder.Entity<CandidateExperience>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("CandidateExperiences_PK");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-
-            entity.HasOne(d => d.Candidate).WithMany(p => p.CandidateExperiences)
-                .HasForeignKey(d => d.CandidateId)
-                .HasConstraintName("CandidateExperiences_CandidateId_FK");
-
-            entity.HasOne(d => d.Experience).WithMany(p => p.CandidateExperiences)
-                .HasForeignKey(d => d.ExperienceId)
-                .HasConstraintName("CandidateExperiences_ExperienceId_FK");
-        });
-
         modelBuilder.Entity<CandidateSkill>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("CandidateSkill_PK");
@@ -101,21 +80,6 @@ public partial class DreamJobContext : DbContext
             entity.HasOne(d => d.Skill).WithMany(p => p.CandidateSkills)
                 .HasForeignKey(d => d.SkillId)
                 .HasConstraintName("CandidateSkills_SkillId_FK");
-        });
-
-        modelBuilder.Entity<CandidateStudy>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("CandidateStudies_PK");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-
-            entity.HasOne(d => d.Candidate).WithMany(p => p.CandidateStudies)
-                .HasForeignKey(d => d.CandidateId)
-                .HasConstraintName("CandidateStudies_CandidateId_FK");
-
-            entity.HasOne(d => d.Studies).WithMany(p => p.CandidateStudies)
-                .HasForeignKey(d => d.StudiesId)
-                .HasConstraintName("CandidateStudies_StudiesId_FK");
         });
 
         modelBuilder.Entity<CandidatesCareerField>(entity =>
@@ -160,7 +124,6 @@ public partial class DreamJobContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Employers)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Employers_UserId_FK");
         });
 
@@ -189,6 +152,10 @@ public partial class DreamJobContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.StartYear).HasColumnType("date");
+
+            entity.HasOne(d => d.Candidate).WithMany(p => p.Experiences)
+                .HasForeignKey(d => d.CandidateId)
+                .HasConstraintName("Experiences_CandidateId_FK");
         });
 
         modelBuilder.Entity<Interaction>(entity =>
@@ -228,11 +195,11 @@ public partial class DreamJobContext : DbContext
 
             entity.HasOne(d => d.JobOffer).WithMany(p => p.JobSkills)
                 .HasForeignKey(d => d.JobOfferId)
-                .HasConstraintName("FK__JobSkills__JobOf__59FA5E80");
+                .HasConstraintName("FK__JobSkills__JobOf__7E37BEF6");
 
             entity.HasOne(d => d.Skill).WithMany(p => p.JobSkills)
                 .HasForeignKey(d => d.SkillId)
-                .HasConstraintName("FK__JobSkills__Skill__5AEE82B9");
+                .HasConstraintName("FK__JobSkills__Skill__7F2BE32F");
         });
 
         modelBuilder.Entity<Role>(entity =>
@@ -266,15 +233,19 @@ public partial class DreamJobContext : DbContext
             entity.Property(e => e.University)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.Candidate).WithMany(p => p.Studies)
+                .HasForeignKey(d => d.CandidateId)
+                .HasConstraintName("Studies_CandidateId_FK");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Users_PK");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__536C85E4474025E0").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Users__536C85E403C49CF7").IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D105345CC84766").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534FCD00689").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Email).HasMaxLength(100);

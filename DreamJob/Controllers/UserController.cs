@@ -13,9 +13,11 @@ namespace DreamJob.Controllers
     public class UserController : Controller
     {
         private UserService _userService;
-        public UserController(UserService userService)
+        private CandidateService _candidateService;
+        public UserController(UserService userService, CandidateService candidateService)
         {
             _userService = userService;
+            _candidateService = candidateService;
         }
         [HttpGet]
         public IActionResult Login()
@@ -53,7 +55,7 @@ namespace DreamJob.Controllers
 
             var claimsIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            var x = User.Identity.IsAuthenticated;
+            //var x = User.Identity.IsAuthenticated;
 
         }
 
@@ -69,5 +71,6 @@ namespace DreamJob.Controllers
             return RedirectToAction("Login", "User");
 
         }
+
     }
 }

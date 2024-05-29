@@ -10,5 +10,8 @@ Migration commands :
 
 
 
+Scaffold-DbContext -Provider Microsoft.EntityFrameworkCore.SqlServer -Connection "Server=tcp:dreamjob.database.windows.net,1433;Initial Catalog=DreamJob;Persist Security Info=False;User ID=stefan;Password=ADMINPA55!;
+MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;" -OutputDir "Entities" -ContextDir "EntityFramework" -f
 
-
+ //optionsBuilder.UseSqlServer("Server=DESKTOP-9E5HMJQ\\SQL_SERVER;Initial Catalog=DreamJob;Integrated Security=true;\nTrustServerCertificate= true;");
+    optionsBuilder.UseSqlServer("Server=tcp:dreamjob.database.windows.net,1433;Initial Catalog=DreamJob;Persist Security Info=False;User ID=stefan;Password=ADMINPA55!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;");

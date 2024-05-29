@@ -38,5 +38,10 @@ namespace DreamJob.Controllers
             }
         }
 
+        [HttpGet]
+        public void Update()
+        {
+
+        }
     }
 }
