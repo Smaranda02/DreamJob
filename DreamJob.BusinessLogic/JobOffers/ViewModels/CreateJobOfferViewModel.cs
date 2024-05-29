@@ -16,5 +16,7 @@ namespace DreamJob.BusinessLogic.JobOffer.ViewModels
 
         public string JobDescription { get; set; } = null!;
         public List<SelectListItem> SelectedSkills { get; set; } = new List<SelectListItem>();
+
+        public List<int> SkillIds { get; set; } = new List<int>();
     }
 }

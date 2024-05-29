@@ -9,6 +9,7 @@ using DreamJob.Entities;
 using DreamJob.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Mvc;
+using DreamJob.BusinessLogic.Skills;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -16,21 +17,20 @@ namespace DreamJob.BusinessLogic.JobOffers
     {
 
         private readonly DreamJobContext _context;
-        public JobOfferService(DreamJobContext context)
+        private readonly SkillsService _skillsService;
+        public JobOfferService(DreamJobContext context, SkillsService skillsService)
         {
             _context = context;
+            _skillsService = skillsService;
         }
 
         public CreateJobOfferViewModel CreateJobOfferVM() {
-            var model = new CreateJobOfferViewModel();
-            var skills = _context.Skills.ToList();
-            foreach (var skill in skills) {
-                model.SelectedSkills.Add(new SelectListItem {
+            
+            var skills = _skillsService.GetDefaultSkills();
+            var model = new CreateJobOfferViewModel() {
+                SelectedSkills = skills
+            };
 
-                    Text = skill.SkillName,
-                    Value = skill.Id.ToString()
-                });
-            }
             return model;
         }
 
@@ -40,16 +40,12 @@ namespace DreamJob.BusinessLogic.JobOffers
                 JobDescription = model.JobDescription,
                 EmployerId = 1,
             };
+
+            var jobSkills = _skillsService.CreateJobSkill(model.SkillIds, jobOffer);
             _context.JobOffers.Add(jobOffer);
+            _context.JobSkills.AddRange(jobSkills);
             _context.SaveChanges();
-            foreach (var skill in model.SelectedSkills) {
-                var jobSkill = new Entities.Entities.JobSkill {
-                    JobOfferId = jobOffer.Id,
-                    SkillId = int.Parse(skill.Value)
-                };
-                _context.JobSkills.Add(jobSkill);
-            }
-            _context.SaveChanges();
+            
         }
 
         public List<Entities.Entities.JobOffer> GetJobOffers()

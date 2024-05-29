@@ -32,6 +32,17 @@
     </div>
 
     <div>
+        <label asp-for="SkillIds" class="control-label">Skills</label>
+        <select asp-for="SkillIds" class="form-control" multiple="multiple">
+            <option value="">Select a skill</option>
+            @foreach (var skill in Model.SelectedSkills)
+            {
+                <option value="@skill.Value">@skill.Text</option>
+            }
+        </select>
+    </div>
+
+    <div>
         <input type="submit" value="Save"/>
     </div>
 
