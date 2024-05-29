@@ -23,7 +23,7 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
 
         public int Role { get; set; }
 
-        public IEnumerable<SelectListItem> Skills { get; set; }
+        public List<SelectListItem> Skills { get; set; } = new List<SelectListItem>();
         public List<int> SelectedSkillIds { get; set; } = new List<int>();
 
 

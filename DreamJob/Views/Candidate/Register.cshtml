@@ -50,10 +50,22 @@
         <input asp-for="CandidateDescription" />
      </div>
 
-     <div>
+    <div>
         <label asp-for="Linkedin">Linkedin Account</label>
-        <input asp-for="Linkedin"/>
-     </div>
+        <input asp-for="Linkedin" />
+    </div>
+
+
+    <div>
+        <label asp-for="SelectedSkillIds" class="control-label">Skills</label>
+        <select asp-for="SelectedSkillIds" class="form-control" multiple="multiple">
+           <option value="">-- Select Skill --</option>
+            @foreach (var skill in Model.Skills)
+            {
+                <option value="@skill.Value">@skill.Text</option>
+            }
+        </select>
+    </div>
 
     @if (!ViewData.ModelState.IsValid)
     {

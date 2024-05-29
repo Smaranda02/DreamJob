@@ -30,15 +30,15 @@ namespace DreamJob.BusinessLogic.Candidates
         public RegisterViewModel CreateRegisterVM()
         {
             var skills = _skillsService.GetDefaultSkills();
-            var model = new RegisterViewModel();
-            model.Skills = skills;
+            var model = new RegisterViewModel
+            {
+                Skills = skills,
+            };
             return model;
         }
 
         public void Register(RegisterViewModel model)
         {
-
-            
             // var hashedPassword = HashPassword(model.Password);
             model.Role = (int)Roles.Candidate;
             var username = model.FirstName.ToLower() + model.Surname.ToLower();
@@ -59,14 +59,18 @@ namespace DreamJob.BusinessLogic.Candidates
                 Surname = model.Surname,
                 CandidateDescription = model.CandidateDescription,
                 Linkedin = model.Linkedin,
-                User = newUser
+                User = newUser,
             };
+
+            var candidateSkills = _skillsService.CreateCandidateSkill(model.SelectedSkillIds, newCandidate);
 
             _context.Users.Add(newUser);
             _context.Candidates.Add(newCandidate);
+            _context.CandidateSkills.AddRange(candidateSkills);
             _context.SaveChanges();
 
         }
 
+       
     }
 }
