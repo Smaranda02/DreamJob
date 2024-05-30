@@ -2,6 +2,7 @@ using DreamJob.BusinessLogic.Employers;
 using DreamJob.BusinessLogic.JobOffers;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates;
+using DreamJob.BusinessLogic.Skills;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.Entities.Entities;
 using Microsoft.Extensions.DependencyInjection;

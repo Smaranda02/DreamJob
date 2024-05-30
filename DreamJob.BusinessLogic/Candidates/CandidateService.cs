@@ -1,16 +1,11 @@
 ﻿using DreamJob.DataAccess.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using DreamJob.BusinessLogic.Skills;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
