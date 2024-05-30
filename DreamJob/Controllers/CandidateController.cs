@@ -45,6 +45,14 @@ namespace DreamJob.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
+        public IActionResult GetJsonForUpdate()
+        {
+            var model = _candidateService.GetUpdateCandidateVM();
+            return Ok(model);
+        }
+
         [HttpPost]  
         public IActionResult Update(UpdateCandidateViewModel model)
         {

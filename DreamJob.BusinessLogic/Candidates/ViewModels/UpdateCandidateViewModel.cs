@@ -23,7 +23,6 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
         public List<int> SelectedSkillIds { get; set; } = new List<int>();
 
         public List<StudyViewModel> Studies { get; set; }
-
         public List<ExperienceViewModel> Experiences { get; set; }
 
 

@@ -1,41 +1,88 @@
 ﻿@model DreamJob.BusinessLogic.Candidates.ViewModels.UpdateCandidateViewModel;
+@using DreamJob.BusinessLogic.Studies.ViewModels;
 
 <h1>
     Complete your profile and keep it updated!
 </h1>
 
-<form asp-action="Update" asp-controller="Candidate">
+<form id="updateCandidate"
+    asp-action="Update" asp-controller="Candidate">
     <input type="hidden" asp-for="Id" />
 
     <div>
         <label asp-for="@Model.FirstName">Firstname</label>
-        <input asp-for="@Model.FirstName" />
+        <input id="firstname" asp-for="@Model.FirstName" />
     </div>
 
     <div>
         <label asp-for="Surname">Surname</label>
-        <input asp-for="Surname" />
+        <input id="surname" asp-for="Surname" />
     </div>
 
     <div>
         <label asp-for="Email">Email</label>
-        <input asp-for="Email" />
+        <input id="email"  asp-for="Email" />
     </div>
 
     <div>
         <label asp-for="Password">Password</label>
-        <input asp-for="Password" />
+        <input id="password"  asp-for="Password" />
     </div>
 
     <div>
         <label asp-for="CandidateDescription">Description about yourself</label>
-        <input asp-for="CandidateDescription" />
+        <input id ="description" asp-for="CandidateDescription" />
     </div>
 
     <div>
         <label asp-for="Linkedin">Linkedin Account</label>
-        <input asp-for="Linkedin" />
+        <input id="linkedin"  asp-for="Linkedin" />
     </div>
+
+    <div>
+         <button type="button" id="add-education-button" class="btn btn-secondary">Add Educational Experience </button>
+         <button type="button" id="add-experience-button" class="btn btn-primary">Add Work Experience </button>
+    </div>
+
+  
+    <div id="studyContainer">
+        <table class="table-bordered table table-hover table">
+            <thead>
+            <tr>
+                <th>University</th>
+                <th>Specialty</th>
+                <th>Study period</th>
+            </tr>
+            </thead>
+            
+          
+            @for (int i = 0; i < Model.Studies.Count; i++)
+            {
+                <tr class="study">
+                    <td>
+                        <span>@Model.Studies[i].University</span>
+                        <input type="hidden" class="university" value="@Model.Studies[i].University" />
+                    </td>
+                    <td>
+                        <span>@Model.Studies[i].Specialty</span>
+                        <input type="hidden" class="specialty" value="@Model.Studies[i].Specialty" />
+                    </td>
+                    <td>
+                        <span>@Model.Studies[i].StartYear.ToString("d") - @Model.Studies[i].EndYear.ToString("d")</span>
+                        <input type="hidden" class="startYear" value="@Model.Studies[i].StartYear.Year" />
+                        <input type="hidden" class="endYear" value="@Model.Studies[i].EndYear.Year" />
+                    </td>
+                    <td>
+                        <button type="button" class="remove-study-button btn btn-danger">Remove</button>
+                        <button type="button" class="edit-study btn btn-primary">Edit</button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+        <button type="button" id="add-study-button">Add Study</button>
+        <button type="submit">Submit</button>
 
 
     @if (!ViewData.ModelState.IsValid)
@@ -54,10 +101,20 @@
     }
 
     <div>
-        <input type="submit" value="Save" />
+        <button  id="submitCandidate" class="btn btn-primary" value="Save" />
     </div>
 
     <div>
         <a asp-action="Index" asp-controller="Home">Back</a>
     </div>
 </form>
+
+                
+@section Scripts {
+    @{
+
+        <script src="~/js/updateCandidate.js" defer asp-append-version="true"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    }
+}

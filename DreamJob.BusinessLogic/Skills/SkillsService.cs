@@ -1,4 +1,5 @@
-﻿using DreamJob.BusinessLogic.Candidates.ViewModels;
+﻿using AutoMapper;
+using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.DataAccess.EntityFramework;
 using DreamJob.Entities.Entities;
@@ -17,11 +18,13 @@ namespace DreamJob.BusinessLogic.Skills
 
         private DreamJobContext _context;
         private UserService _userService;
+        private IMapper _mapper;
 
-        public SkillsService(DreamJobContext context, UserService userService)
+        public SkillsService(DreamJobContext context, UserService userService, IMapper mapper)
         {
             _context= context;
             _userService = userService;
+            _mapper = mapper;
         }
 
         public List<SelectListItem> GetDefaultSkills()
@@ -54,5 +57,6 @@ namespace DreamJob.BusinessLogic.Skills
 
             return candidateSkills;
         }
+
     }
 }
