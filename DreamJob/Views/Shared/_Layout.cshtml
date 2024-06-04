@@ -37,18 +37,16 @@
                             <li class="nav-item">
                                 <p>Hello @CurrentUserViewModel.Username !</p>
                             </li>
+
+                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Update">Complete your profile</a>
+                            </li>
                         }
                         else
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                             </li>
-                        }
-
-                        @if (CurrentUserViewModel.IsAuthenticated)
-                        {
-
-
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Register">Register as a Candidate</a>
@@ -57,7 +55,6 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Employer" asp-action="Register">Register as an Employer</a>
                             </li>
                         }
-                
 
 
                         @if (CurrentUserViewModel.Role == 3)

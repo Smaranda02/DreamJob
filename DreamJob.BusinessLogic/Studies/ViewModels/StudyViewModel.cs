@@ -8,6 +8,7 @@ namespace DreamJob.BusinessLogic.Studies.ViewModels
 {
     public class StudyViewModel
     {
+        public int? Id { get; set; }
         public string University { get; set; } = null!;
 
         public string Specialty { get; set; } = null!;

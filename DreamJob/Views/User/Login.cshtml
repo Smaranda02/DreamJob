@@ -10,14 +10,16 @@
 </h1>
 
 <form asp-controller="User" asp-action="Login">
-    <div>
+    <div class="form-control">
         <label asp-for="Email">Email</label>
         <input asp-for="Email"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <div>
+    <div class="form-control">
         <label asp-for="Password">Password</label>
         <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     @if (!ViewData.ModelState.IsValid)

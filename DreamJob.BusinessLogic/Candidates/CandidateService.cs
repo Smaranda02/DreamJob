@@ -8,6 +8,8 @@ using DreamJob.BusinessLogic.Skills;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using DreamJob.BusinessLogic.Studies;
+using DreamJob.BusinessLogic.Experiences;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -18,14 +20,19 @@ namespace DreamJob.BusinessLogic.Candidates
         private readonly SkillsService _skillsService;
         private CurrentUserViewModel currentUser;
         private readonly IMapper _mapper;
+        private readonly StudyService _studyService;
+        private readonly ExperienceService _experienceService;
 
-        public CandidateService(DreamJobContext context, UserService userService, SkillsService skillsService, IMapper mapper)
+        public CandidateService(DreamJobContext context, UserService userService, SkillsService skillsService, 
+            IMapper mapper, StudyService studyService, ExperienceService experienceService)
         {
             _context = context;
             _userService = userService;
             _skillsService = skillsService;
             currentUser = _userService.GetCurrentUser();
             _mapper = mapper;
+            _studyService = studyService;
+            _experienceService = experienceService;
         }
 
         public RegisterViewModel CreateRegisterVM()
@@ -76,19 +83,27 @@ namespace DreamJob.BusinessLogic.Candidates
 
         public UpdateCandidateViewModel GetUpdateCandidateVM()
         {
-            var user =  _context.Candidates
+            var candidate =  _context.Candidates
                                 .Include(c => c.User)
                                 .Where(c => c.UserId == currentUser.Id)
                                 .FirstOrDefault();
 
-            var userToUpdate = _mapper.Map<Candidate, UpdateCandidateViewModel>(user);
+            var studies = _studyService.GetCandidateStudies(candidate.Id);
+            var experiences = _experienceService.GetCandidateExperiences(candidate.Id);
+            var candidateToUpdate = _mapper.Map<Candidate, UpdateCandidateViewModel>(candidate);
+            candidateToUpdate.Studies = studies;
+            candidateToUpdate.Experiences= experiences;
 
-            return userToUpdate;
+            return candidateToUpdate;
         }
 
         public void Update(UpdateCandidateViewModel model)
         {
             var candidate = _mapper.Map<UpdateCandidateViewModel, Candidate>(model);
+            var newStudies = _studyService.CreateNewStudies(model.Studies, candidate.Id);
+            var oldStudies = _studyService.GetCurrentStudies(candidate.Id);
+            var newExperiences = _experienceService.CreateExperinces(model.Experiences, candidate.Id);
+            var oldExperiences = _experienceService.GetCurrentExperiences(candidate.Id);
 
             var user = new User
             {
@@ -103,6 +118,14 @@ namespace DreamJob.BusinessLogic.Candidates
             candidate.UserId = currentUser.Id;
 
             _context.Users.Update(user);
+            _context.Studies.RemoveRange(oldStudies);
+            _context.Experiences.RemoveRange(oldExperiences);
+            _context.SaveChanges();
+
+            _context.Studies.AddRange(newStudies);
+            _context.Experiences.AddRange(newExperiences);
+            _context.SaveChanges();
+
             _context.Candidates.Update(candidate);
             _context.SaveChanges();
         }

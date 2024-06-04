@@ -12,6 +12,8 @@ using DreamJob.BusinessLogic.Skills;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using System.Security.Claims;
 using DreamJob.Common.Enums;
+using DreamJob.BusinessLogic.Studies;
+using DreamJob.BusinessLogic.Experiences;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +41,11 @@ builder.Services.AddScoped<JobOfferService>();
 builder.Services.AddScoped<EmployerService>();
 builder.Services.AddScoped<CandidateService>();
 builder.Services.AddScoped<SkillsService>();
+builder.Services.AddScoped<StudyService>();
+builder.Services.AddScoped<ExperienceService>();
+
 builder.Services.AddScoped<RegisterValidator>();
+
 
 
 builder.Services.AddScoped(s =>
