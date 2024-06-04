@@ -1,16 +1,11 @@
 ﻿using DreamJob.DataAccess.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DreamJob.Common.Enums;
 using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using DreamJob.BusinessLogic.Skills;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using DreamJob.BusinessLogic.Studies;
@@ -94,8 +89,10 @@ namespace DreamJob.BusinessLogic.Candidates
                                 .FirstOrDefault();
 
             var studies = _studyService.GetCandidateStudies(candidate.Id);
+            var experiences = _experienceService.GetCandidateExperiences(candidate.Id);
             var candidateToUpdate = _mapper.Map<Candidate, UpdateCandidateViewModel>(candidate);
             candidateToUpdate.Studies = studies;
+            candidateToUpdate.Experiences= experiences;
 
             return candidateToUpdate;
         }
@@ -103,8 +100,10 @@ namespace DreamJob.BusinessLogic.Candidates
         public void Update(UpdateCandidateViewModel model)
         {
             var candidate = _mapper.Map<UpdateCandidateViewModel, Candidate>(model);
-            var studies = _studyService.CreateStudies(model.Studies, candidate.Id);
-            var experiences = _experienceService.CreateExperinces(model.Experiences, candidate.Id);
+            var newStudies = _studyService.CreateNewStudies(model.Studies, candidate.Id);
+            var oldStudies = _studyService.GetCurrentStudies(candidate.Id);
+            var newExperiences = _experienceService.CreateExperinces(model.Experiences, candidate.Id);
+            var oldExperiences = _experienceService.GetCurrentExperiences(candidate.Id);
 
             var user = new User
             {
@@ -119,8 +118,14 @@ namespace DreamJob.BusinessLogic.Candidates
             candidate.UserId = currentUser.Id;
 
             _context.Users.Update(user);
-            _context.AddRange(studies);
-            _context.AddRange(experiences);
+            _context.Studies.RemoveRange(oldStudies);
+            _context.Experiences.RemoveRange(oldExperiences);
+            _context.SaveChanges();
+
+            _context.Studies.AddRange(newStudies);
+            _context.Experiences.AddRange(newExperiences);
+            _context.SaveChanges();
+
             _context.Candidates.Update(candidate);
             _context.SaveChanges();
         }

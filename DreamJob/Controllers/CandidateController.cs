@@ -2,6 +2,7 @@
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
+using DreamJob.BusinessLogic.Users.ViewModels;
 using FluentValidation;
 
 namespace DreamJob.Controllers
@@ -54,7 +55,7 @@ namespace DreamJob.Controllers
         }
 
         [HttpPost]  
-        public IActionResult Update(UpdateCandidateViewModel model)
+        public IActionResult Update([FromBody] UpdateCandidateViewModel model)
         {
             //if (ModelState.IsValid)
             {

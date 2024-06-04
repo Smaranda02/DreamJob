@@ -33,5 +33,22 @@
         return input;
     }
 
+    this.createButton = (type, id, text, classes, attributes = []) => {
+        var button = document.createElement("button");
+        button.type = type;
+        button.id = id;
+        button.textContent = text;
+        for (var index = 0; index < classes.length; index++) {
+            button.classList.add(classes[index]);
+        }
+
+        for (var index = 0; index < attributes.length; index++) {
+            button.setAttribute(attributes[index]["key"], attributes[index]["value"]);
+        }
+
+        return button;
+    }
+
+
 
 }).call(utils);

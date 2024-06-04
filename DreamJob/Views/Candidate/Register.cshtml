@@ -5,45 +5,52 @@
     Register as a job seeker
 </h1>
 
-<form asp-action="Register" asp-controller="Candidate">
-    <div>
+<form asp-action="Register" asp-controller="Candidate" method="post">
+    <div class="form-group">
         <label asp-for="@Model.FirstName">Firstname</label>
         <input asp-for="@Model.FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
 
-    <div>
+    <div class="form-group">
         <label asp-for="Surname">Surname</label>
         <input asp-for="Surname"/>
+        <span asp-validation-for="Surname" class="text-danger"></span>
     </div>
 
-    <div>
+    <div class="form-group">
         <label asp-for="Email">Email</label>
         <input asp-for="Email"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <div>
+    <div class="form-group">
         <label asp-for="Password">Password</label>
         <input asp-for="Password"/>
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     
-    <div>
+    <div class="form-group">
         <label asp-for="ConfirmPassword">Confirm your password</label>
         <input asp-for="ConfirmPassword"/>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
 
-     <div>
+    <div class="form-group">
         <label asp-for="CandidateDescription">Description about yourself</label>
         <input asp-for="CandidateDescription" />
+        <span asp-validation-for="CandidateDescription" class="text-danger"></span>
      </div>
 
-    <div>
+    <div class="form-group">
         <label asp-for="Linkedin">Linkedin Account</label>
         <input asp-for="Linkedin" />
+        <span asp-validation-for="Linkedin" class="text-danger"></span>
     </div>
 
 
-    <div>
+    <div class="form-group">
         <label asp-for="SelectedSkillIds" class="control-label">Skills</label>
         <select asp-for="SelectedSkillIds" class="form-control" multiple="multiple">
            <option value="">-- Select Skill --</option>

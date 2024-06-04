@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model DreamJob.BusinessLogic.JobOffer.ViewModels.CreateJobOfferViewModel;
+@inject DreamJob.BusinessLogic.Users.ViewModels.CurrentUserViewModel CurrentUserViewModel;
+
+
+
+<form asp-action="AddJobOffer" asp-controller="JobOffer">
+    You are user @CurrentUserViewModel.Username
+
+    <input type="hidden" asp-for="Username" value="@CurrentUserViewModel.Username" />"
+
+    <div>
+        <label asp-for="Salary"> Salary</label>
+        <input asp-for="Salary"/>
+    </div>
+
+     <div>
+        <label asp-for="JobDescription"> Job Description </label>
+        <input asp-for="JobDescription"/>
+    </div>
+
+    <div>
+        Select a skill:
+        @foreach (var skill in Model.SelectedSkills)
+        {
+            <input type="checkbox" name="SelectedSkills" value="@skill.Value" />  @skill.Text
+        }
+
+
+
+
+    </div>
+
+    <div>
+        <label asp-for="SkillIds" class="control-label">Skills</label>
+        <select asp-for="SkillIds" class="form-control" multiple="multiple">
+            <option value="">Select a skill</option>
+            @foreach (var skill in Model.SelectedSkills)
+            {
+                <option value="@skill.Value">@skill.Text</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <input type="submit" value="Save"/>
+    </div>
+
+</form>
+

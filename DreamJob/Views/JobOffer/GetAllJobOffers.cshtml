@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetAllJobOffers</title>
+    </head>
+
+    <body>
+        <h1>See all the job offers on the market</h1>
+        <table>
+            <tr>
+                <th> Employer ID </th>
+                <th>Job Description</th>
+                <th>Job Salary</th>
+                <th>Employer name</th>
+                
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EmployerId</td>
+                    <td>@item.JobDescription</td>
+                    <td>@item.Salary</td>
+                    <td>@item.Employer.EmployerName</td>
+
+                </tr>
+            }
+        </table>
+     </body>
+</html>

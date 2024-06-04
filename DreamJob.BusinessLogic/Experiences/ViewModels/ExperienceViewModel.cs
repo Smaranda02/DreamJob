@@ -8,6 +8,7 @@ namespace DreamJob.BusinessLogic.Experiences.ViewModels
 {
     public class ExperienceViewModel
     {
+        public int? Id { get; set; }
         public string ExperienceName { get; set; } = null!;
 
         public DateTime StartYear { get; set; }

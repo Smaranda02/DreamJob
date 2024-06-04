@@ -19,11 +19,11 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
         public string CandidateDescription { get; set; } = null!;
         public string Linkedin { get; set; } = null!;
 
-        public List<SelectListItem> Skills { get; set; } = new List<SelectListItem>();
-        public List<int> SelectedSkillIds { get; set; } = new List<int>();
+        //public List<SelectListItem> Skills { get; set; } = new List<SelectListItem>();
+        //public List<int> SelectedSkillIds { get; set; } = new List<int>();
 
-        public List<StudyViewModel> Studies { get; set; }
-        public List<ExperienceViewModel> Experiences { get; set; }
+        public List<StudyViewModel> Studies { get; set; } = new List<StudyViewModel>();
+        public List<ExperienceViewModel> Experiences { get; set; } = new List<ExperienceViewModel>();
 
 
 

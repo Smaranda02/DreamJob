@@ -23,9 +23,9 @@ namespace DreamJob.BusinessLogic.Studies
             _userService = userService;
         }
 
-        public List<Study> CreateStudies(List<StudyViewModel> studies, int candidateId)
+        public List<Study> CreateNewStudies(List<StudyViewModel> studies, int candidateId)
         {
-            var newStudies = new List<Study>();
+            var newStudies = new List<Study>();       
 
             foreach (var study in studies)
             {
@@ -37,6 +37,14 @@ namespace DreamJob.BusinessLogic.Studies
             return newStudies;
         }
 
+
+        public List<Study> GetCurrentStudies(int candidateId)
+        {
+            var oldStudies = _context.Studies
+                                    .Where(s => s.CandidateId == candidateId)
+                                    .ToList();
+            return oldStudies;
+        }
 
         public List<StudyViewModel> GetCandidateStudies(int candidateId)
         {
@@ -51,6 +59,15 @@ namespace DreamJob.BusinessLogic.Studies
             }
 
             return studyListVM;
+        }
+
+        public StudyViewModel GetStudyById(int id)
+        {
+            var study = _context.Studies
+                                .Where(s => s.Id == id)
+                                .SingleOrDefault();
+            var studyViewModel = _mapper.Map<Study, StudyViewModel>(study);
+            return studyViewModel;
         }
 
     }

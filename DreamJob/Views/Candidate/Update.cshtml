@@ -1,5 +1,4 @@
 ﻿@model DreamJob.BusinessLogic.Candidates.ViewModels.UpdateCandidateViewModel;
-@using DreamJob.BusinessLogic.Studies.ViewModels;
 
 <h1>
     Complete your profile and keep it updated!
@@ -10,8 +9,8 @@
     <input type="hidden" asp-for="Id" />
 
     <div>
-        <label asp-for="@Model.FirstName">Firstname</label>
-        <input id="firstname" asp-for="@Model.FirstName" />
+        <label asp-for="FirstName">Firstname</label>
+        <input id="firstname" asp-for="FirstName" value="@Model.FirstName" />
     </div>
 
     <div>
@@ -40,49 +39,95 @@
     </div>
 
     <div>
-         <button type="button" id="add-education-button" class="btn btn-secondary">Add Educational Experience </button>
-         <button type="button" id="add-experience-button" class="btn btn-primary">Add Work Experience </button>
+        <button type="button" id ="add-study" class=" btn btn-success" onclick="addNewStudyRow()">Add Education</button>
+        <button type="button" id="add-experience" class="btn btn-primary" onclick="addNewExperienceRow()">Add Work Experience </button>
     </div>
 
   
     <div id="studyContainer">
-        <table class="table-bordered table table-hover table">
-            <thead>
-            <tr>
-                <th>University</th>
-                <th>Specialty</th>
-                <th>Study period</th>
-            </tr>
-            </thead>
-            
-          
-            @for (int i = 0; i < Model.Studies.Count; i++)
-            {
-                <tr class="study">
-                    <td>
-                        <span>@Model.Studies[i].University</span>
-                        <input type="hidden" class="university" value="@Model.Studies[i].University" />
-                    </td>
-                    <td>
-                        <span>@Model.Studies[i].Specialty</span>
-                        <input type="hidden" class="specialty" value="@Model.Studies[i].Specialty" />
-                    </td>
-                    <td>
-                        <span>@Model.Studies[i].StartYear.ToString("d") - @Model.Studies[i].EndYear.ToString("d")</span>
-                        <input type="hidden" class="startYear" value="@Model.Studies[i].StartYear.Year" />
-                        <input type="hidden" class="endYear" value="@Model.Studies[i].EndYear.Year" />
-                    </td>
-                    <td>
-                        <button type="button" class="remove-study-button btn btn-danger">Remove</button>
-                        <button type="button" class="edit-study btn btn-primary">Edit</button>
-                    </td>
-                </tr>
-            }
+            <table class="table-bordered table table-hover table">
+                <thead>
+                    <tr>
+                        <th>University</th>
+                        <th>Specialty</th>
+                        <th>Study period</th>
+                    </tr>
+                </thead>
+
+                <tbody id="studies-table-body">
+                    @foreach (var item in Model.Studies)
+                    {
+                        <tr class="study" data-id="@item.Id">
+                            <td>
+                                <span class="university-text">@item.University</span>
+                                <input type="hidden" class="university-input form-control" value="@item.University" />
+                            </td>
+                            <td>
+                                <span class="specialty-text">@item.Specialty</span>
+                                <input type="hidden" class="specialty-input form-control" value="@item.Specialty" />
+                            </td>
+                            <td>
+                                <span class="years-text">@item.StartYear - @item.EndYear</span>
+                                <input type="hidden" class="startYear-input form-control" value="@item.StartYear.Year" />
+                                <input type="hidden" class="endYear-input form-control" value="@item.EndYear.Year" />
+                            </td>
+                            <td>
+                                <button type="button" class="remove-study-button btn btn-danger" onclick="removeStudy(this.closest('tr'))">Remove</button>
+                                <button type="button" class="edit-study btn btn-primary" onclick="editStudy(this)">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
         </table>
     </div>
+   
 
-        <button type="button" id="add-study-button">Add Study</button>
-        <button type="submit">Submit</button>
+
+    <div id="workContainer">
+            <table class="table-bordered table table-hover table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Working period</th>
+                    </tr>
+                </thead>
+
+                <tbody id="work-table-body">
+                    @foreach (var item in Model.Experiences)
+                    {
+                        <tr class="work" data-id="@item.Id">
+                            <td>
+                                <span class="name-text">@item.ExperienceName</span>
+                                <input type="hidden" class="name-input form-control" value="@item.ExperienceName" />
+                            </td>
+                            <td>
+                                <span class="description-text">@item.ExperienceDescription</span>
+                                <input type="hidden" class="description-input form-control" value="@item.ExperienceDescription" />
+                            </td>
+                            <td>
+                                <span class="years-text">@item.StartYear - @item.EndYear</span>
+                                <input type="hidden" class="startYear-input form-control" value="@item.StartYear.Year" />
+                                <input type="hidden" class="endYear-input form-control" value="@item.EndYear.Year" />
+                            </td>
+                            <td>
+                                <button type="button" class="remove-work-button btn btn-danger" onclick="removeWork(this.closest('tr'))">Remove</button>
+                                <button type="button" class="edit-work btn btn-primary" onclick="editWork(this)">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    
+
+
 
 
     @if (!ViewData.ModelState.IsValid)
@@ -101,7 +146,7 @@
     }
 
     <div>
-        <button  id="submitCandidate" class="btn btn-primary" value="Save" />
+        <button type="submit" id="submitCandidate" class="btn btn-primary">Save</button>
     </div>
 
     <div>
@@ -114,6 +159,8 @@
     @{
 
         <script src="~/js/updateCandidate.js" defer asp-append-version="true"></script>
+        <script src="~/js/utils.js" defer asp-append-version="true"></script>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     }
