@@ -126,6 +126,20 @@ namespace DreamJob.BusinessLogic.Candidates
             _context.Experiences.AddRange(newExperiences);
             _context.SaveChanges();
 
+
+            var exp = _context.Experiences.Where(e => e.CandidateId == candidate.Id).ToList();
+            var stu = _context.Studies.Where(e => e.CandidateId == candidate.Id).ToList();
+
+            candidate.Experiences.Clear();
+            candidate.Studies.Clear();
+
+
+            foreach (var ex in exp)
+                candidate.Experiences.Add(ex);
+
+            foreach(var s in stu)
+                candidate.Studies.Add(s);   
+
             _context.Candidates.Update(candidate);
             _context.SaveChanges();
         }
