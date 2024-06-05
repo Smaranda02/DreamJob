@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>
+    Complete your profile as an Employer
+</h1>
+
+<form id ="updateEmployer" asp-action="Update" asp-controller="Employer">
+    <input type="hidden" asp-for="Id"/>
+
+    <div>
+        <label asp-for="CompanyName">Company Name</label>
+        <input id="companyName" asp-for="CompanyName"/>
+    </div>
+
+    <div>
+        <label asp-for="OfficeLocation">Office Location</label>
+        <input id="officeLocation" asp-for="OfficeLocation"/>
+    </div>
+
+    <div>
+        <label asp-for="EmployerDescription">Employer description</label>
+        <input id="employerDescription" asp-for="EmployerDescription"/>
+    </div>
+
+    <div>
+        <label asp-for="EmployerLinkedin">Linkedin</label>
+        <input id="employerLinkedin" asp-for="EmployerLinkedin"/>
+    </div>
+
+    <div>
+        <button type="button" id="add-careerfield" class="btn btn-success" onclick="addNewCareerFieldRow">Add Career Field</button>
+
+    </div>
+
+    <div id="careerFieldContainer">
+        <table class="table-bordered table table-hover table">
+            <thead>
+                <tr>
+                    <th>Career Field</th>
+                </tr>
+            </thead>
+
+            <tbody id="careerField-table-body">
+                @foreach (var item in Model.CareerFields)
+                {
+                    <tr class="careerField" data-id="@item.Id">
+                        <td>
+                            <span class="careerField-text">@item.CareerField</span>
+                            <input type="text" value="@item.CareerField"/>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</form>
