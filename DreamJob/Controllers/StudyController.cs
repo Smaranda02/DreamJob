@@ -1,8 +1,10 @@
 ﻿using DreamJob.BusinessLogic.Studies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DreamJob.Controllers
 {
+    [Authorize]
     public class StudyController : Controller
     {
         private readonly ILogger<StudyController> _logger;

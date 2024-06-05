@@ -1,0 +1,30 @@
+﻿@model DreamJob.BusinessLogic.Interactions.ViewModels.DisplayMatchesViewModel
+
+
+<div class="row">
+    @foreach (var match in Model.Matches)
+    {
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.IsCandidate)
+                    {
+                        <h5 class="card-title">Match with @match.EmployerName</h5>
+                        <p class="card-text">For job @match.JobDescription</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    }
+
+                    else
+                    {
+                        <h5 class="card-title">Match with @match.FirstName @match.Surname</h5>
+                        <p class="card-text">For job @match.JobDescription</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>

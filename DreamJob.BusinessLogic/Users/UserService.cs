@@ -13,6 +13,7 @@ using DreamJob.BusinessLogic.Candidates.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DreamJob.BusinessLogic.Users
 {
@@ -102,5 +103,17 @@ namespace DreamJob.BusinessLogic.Users
             };
 
         }
+
+        public int GetCurrentCandidateId()
+        {
+            return _context.Candidates.Where(c => c.UserId == GetCurrentUser().Id).Select(c => c.Id).FirstOrDefault();
+        }
+
+        public int GetCurrentEmployerId()
+        {
+            return _context.Employers.Where(c => c.UserId == GetCurrentUser().Id).Select(c => c.Id).FirstOrDefault();
+        }
+
+
     }
 }

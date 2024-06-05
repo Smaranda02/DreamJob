@@ -1,4 +1,4 @@
-﻿using DreamJob.BusinessLogic.JobOffer.ViewModels;
+﻿using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using DreamJob.DataAccess.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ using DreamJob.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DreamJob.BusinessLogic.Skills;
+using DreamJob.BusinessLogic.JobOffers.ViewModels;
+using AutoMapper;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -18,26 +20,32 @@ namespace DreamJob.BusinessLogic.JobOffers
 
         private readonly DreamJobContext _context;
         private readonly SkillsService _skillsService;
-        public JobOfferService(DreamJobContext context, SkillsService skillsService)
+        private readonly IMapper _mapper;
+        public JobOfferService(DreamJobContext context, SkillsService skillsService, IMapper mapper)
         {
             _context = context;
             _skillsService = skillsService;
+            _mapper = mapper;
         }
 
-        public CreateJobOfferViewModel CreateJobOfferVM() {
-            
+        public CreateJobOfferViewModel CreateJobOfferVM()
+        {
+
             var skills = _skillsService.GetDefaultSkills();
-            var model = new CreateJobOfferViewModel() {
+            var model = new CreateJobOfferViewModel()
+            {
                 SelectedSkills = skills
             };
 
             return model;
         }
 
-        public void CreateJobOffer(CreateJobOfferViewModel model) {
+        public void CreateJobOffer(CreateJobOfferViewModel model)
+        {
             // find the employer that has the same name as username from the model
             var employer = _context.Employers.FirstOrDefault(x => x.EmployerName == model.Username);
-            var jobOffer = new Entities.Entities.JobOffer {
+            var jobOffer = new Entities.Entities.JobOffer
+            {
                 Salary = model.Salary,
                 JobDescription = model.JobDescription,
                 EmployerId = employer.Id
@@ -48,35 +56,50 @@ namespace DreamJob.BusinessLogic.JobOffers
             _context.JobOffers.Add(jobOffer);
             _context.JobSkills.AddRange(jobSkills);
             _context.SaveChanges();
-            
+
         }
 
-        public List<Entities.Entities.JobOffer> GetJobOffers()
+        public List<JobOfferViewModel> GetJobOffers()
         {
-            var jobOffers = _context.JobOffers.Include(j => j.Employer).ToList();
-            return jobOffers;
+            var jobOffers = _context.JobOffers
+                            .Where(j => j.EmployerId == 6)
+                            .Include(j => j.Employer).ToList();
+            var jobOfferList = new List<JobOfferViewModel>();
+
+            foreach(var jo in jobOffers)
+            {
+                var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jo);
+                jobOfferList.Add(jobOfferViewModel);
+            }
+            return jobOfferList;
         }
 
-        public Entities.Entities.JobOffer GetJobOffer(int id) {
+        public JobOffer GetJobOffer(int id)
+        {
             var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
-            if (jobOffer == null) {
-              //  throw new Exception("Job offer not found");
+            if (jobOffer == null)
+            {
+                //  throw new Exception("Job offer not found");
             }
             return jobOffer;
         }
 
-        public void DeleteJobOffer(int id) {
+        public void DeleteJobOffer(int id)
+        {
             var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
-            if (jobOffer == null) {
+            if (jobOffer == null)
+            {
                 throw new Exception("Job offer not found");
             }
             _context.JobOffers.Remove(jobOffer);
             _context.SaveChanges();
         }
-        
-        public void UpdateJobOffer(int id, CreateJobOfferViewModel model) {
+
+        public void UpdateJobOffer(int id, CreateJobOfferViewModel model)
+        {
             var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
-            if (jobOffer == null) {
+            if (jobOffer == null)
+            {
                 throw new Exception("Job offer not found");
             }
             jobOffer.Salary = model.Salary;
@@ -87,7 +110,6 @@ namespace DreamJob.BusinessLogic.JobOffers
             //jobOffer.JobIndustry = model.JobIndustry;
             _context.SaveChanges();
         }
-
 
     }
 }

@@ -4,6 +4,7 @@ using DreamJob.BusinessLogic.Candidates;
 using DreamJob.BusinessLogic.Candidates.ViewModels;
 using DreamJob.BusinessLogic.Users.ViewModels;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DreamJob.Controllers
 {
@@ -40,6 +41,7 @@ namespace DreamJob.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Candidate")]
         public IActionResult Update()
         {
             var model = _candidateService.GetUpdateCandidateVM();
@@ -48,13 +50,17 @@ namespace DreamJob.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Candidate")]
+
         public IActionResult GetJsonForUpdate()
         {
             var model = _candidateService.GetUpdateCandidateVM();
             return Ok(model);
         }
 
-        [HttpPost]  
+        [HttpPost]
+        [Authorize(Roles = "Candidate")]
+
         public IActionResult Update([FromBody] UpdateCandidateViewModel model)
         {
             //if (ModelState.IsValid)
@@ -64,5 +70,18 @@ namespace DreamJob.Controllers
             }
             //return View(model);
         }
+
+        [Authorize(Roles = "Employer")]
+        [HttpGet]
+        public IActionResult GetCandidates()
+        {
+
+            return View(new DisplayCandidatesViewModel
+            {
+                Candidates = _candidateService.GetCandidates()
+            });
+        }
+
+       
     }
 }
