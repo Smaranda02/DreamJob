@@ -13,6 +13,7 @@ using DreamJob.BusinessLogic.Candidates.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DreamJob.BusinessLogic.Users
 {
@@ -102,5 +103,7 @@ namespace DreamJob.BusinessLogic.Users
             };
 
         }
+
+      
     }
 }

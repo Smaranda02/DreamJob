@@ -475,7 +475,7 @@ function saveNewExperienceRow(button) {
 
 
 function postData(model) {
-    console.log(model);
+    console.log(JSON.stringify(model));
     fetch(`/Candidate/Update`, {
         method: "post",
         body: JSON.stringify(model),
