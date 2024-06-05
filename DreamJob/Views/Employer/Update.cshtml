@@ -1,0 +1,98 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DreamJob.BusinessLogic.Employers.ViewModels.UpdateEmployerViewModel;
+
+<h1>
+    Complete your profile as an Employer
+</h1>
+
+<form id ="updateEmployer" asp-action="Update" asp-controller="Employer">
+    <input type="hidden" asp-for="Id"/>
+
+    <div>
+        <label asp-for="EmployerName">Company Name</label>
+        <input id="employerName" asp-for="EmployerName"/>
+    </div>
+
+    <div>
+        <label asp-for="OfficeLocation">Office Location</label>
+        <input id="officeLocation" asp-for="OfficeLocation"/>
+    </div>
+
+    <div>
+        <label asp-for="EmployerDescription">Employer description</label>
+        <input id="employerDescription" asp-for="EmployerDescription"/>
+    </div>
+
+    <div>
+        <label asp-for="EmployerLinkedin">Linkedin</label>
+        <input id="employerLinkedin" asp-for="EmployerLinkedin"/>
+    </div>
+
+    <div>
+        <button type="button" id="add-careerField" class="btn btn-success" onclick="addNewCareerFieldRow()">Add Career Field</button>
+
+    </div>
+
+    <div id="careerFieldContainer">
+        <table class="table-bordered table table-hover table">
+            <thead>
+                <tr>
+                    <th>Career Field</th>
+                </tr>
+            </thead>
+
+            <tbody id="careerField-table-body">
+                @foreach (var item in Model.CareerFields)
+                {
+                    <tr class="careerField" data-id="@item.Id">
+                        <td>
+                            <span class="careerField-text">@item.CareerFieldName</span>
+                            <input type="text" value="@item.CareerFieldName"/>
+                        </td>
+                        <td>
+                            <button type="button" class="remove-work-button btn btn-danger" onclick="removeWork(this.closest('tr'))"> Remove </button>
+                            <button type="button" class="edit-work btn btn-primary" onclick="editCareerField(this)">
+                                Edit
+                             </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        if(ViewData.ModelState[string.Empty] != null)
+        {
+            <div class="errror-summary">
+                @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+                {
+                    <div class="error-item text-danger">
+                        @error.ErrorMessage
+                    </div>
+                }
+            </div>
+          }
+      }
+      <div>
+          <button type ="submit" id="submitCareerField" class="btn btn-primary">Save</button>
+      </div>
+
+      <div>
+          <a asp-action="Index" asp-controller="Home">Back</a>
+      </div>
+
+
+</form>
+
+@section Scripts {
+    <script src="~/js/updateEmployer.js" defer="defer" asp-append-version="true"></script>
+    <script src="~/js/utils.js" defer="defer" asp-append-version="true"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+}

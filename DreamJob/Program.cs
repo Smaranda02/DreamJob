@@ -13,6 +13,7 @@ using System.Security.Claims;
 using DreamJob.Common.Enums;
 using DreamJob.BusinessLogic.Studies;
 using DreamJob.BusinessLogic.Experiences;
+using DreamJob.BusinessLogic.CareerFields;
 using DreamJob.BusinessLogic.JobOffers;
 using DreamJob.BusinessLogic.Interactions;
 
@@ -44,6 +45,7 @@ builder.Services.AddScoped<CandidateService>();
 builder.Services.AddScoped<SkillsService>();
 builder.Services.AddScoped<StudyService>();
 builder.Services.AddScoped<ExperienceService>();
+builder.Services.AddScoped<CareerFieldsService>();
 builder.Services.AddScoped<InteractionService>();
 
 
