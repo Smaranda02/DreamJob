@@ -45,6 +45,9 @@ builder.Services.AddScoped<CandidateService>();
 builder.Services.AddScoped<SkillsService>();
 builder.Services.AddScoped<StudyService>();
 builder.Services.AddScoped<ExperienceService>();
+builder.Services.AddScoped<CareerFieldsService>();
+builder.Services.AddScoped<InteractionService>();
+
 
 builder.Services.AddScoped<RegisterValidator>();
 
@@ -97,6 +100,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=JobOffer}/{action=GetAllJobOffers}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

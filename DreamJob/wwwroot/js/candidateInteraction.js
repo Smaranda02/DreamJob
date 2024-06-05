@@ -7,8 +7,6 @@ function likeClicked(index) {
     console.log(jobOffers[index]);
     var currentDate = new Date();
     var date = currentDate.toISOString();
-    //date = `2025-01-01T00:00:00`;
-
 
     var interaction = {
         CandidateId: 1,
@@ -23,7 +21,7 @@ function likeClicked(index) {
     //interactions.push(interaction);
 
 
-    fetch(`/Interaction/CreateUpdate`, {
+    fetch(`/Interaction/CreateUpdate/${false}`, {
         method: "post",
         body: JSON.stringify(interaction),
         headers: {
@@ -48,15 +46,3 @@ function likeClicked(index) {
         });
 
 }
-
-function sendData() {
-    if (interactions.length > 0) {
-        const url = '/Interaction/CreateUpdate';
-        const data = JSON.stringify(interactions);
-        console.log(data);
-        // Using navigator.sendBeacon to send data before the user leaves the page
-        navigator.sendBeacon(url, data);
-    }
-}
-
-window.addEventListener("beforeunload", sendData);
