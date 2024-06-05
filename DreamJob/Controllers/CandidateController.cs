@@ -70,5 +70,16 @@ namespace DreamJob.Controllers
             }
             //return View(model);
         }
+
+        [Authorize(Roles = "Employer")]
+        [HttpGet]
+        public IActionResult GetCandidates()
+        {
+
+            return View(new DisplayCandidatesViewModel
+            {
+                Candidates = _candidateService.GetCandidates()
+            });
+        }
     }
 }

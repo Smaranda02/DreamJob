@@ -21,9 +21,10 @@ namespace DreamJob.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUpdate([FromBody] InteractionViewModel interactions)
+        [Route("Interaction/CreateUpdate/{fromEmployer}")]
+        public IActionResult CreateUpdate([FromBody] InteractionViewModel interactions, bool fromEmployer)
         {
-            _interactionService.UpdateCandidateInteraction(interactions);
+            _interactionService.UpdateCandidateInteraction(interactions, fromEmployer);
             return Ok();  
         }
     }

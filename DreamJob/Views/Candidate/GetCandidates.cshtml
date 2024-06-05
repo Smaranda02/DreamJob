@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Newtonsoft.Json;
+@model DreamJob.BusinessLogic.Candidates.ViewModels.DisplayCandidatesViewModel
+
+<div id="candidateCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+    <div class="carousel-inner">
+        @for (int index = 0; index < Model.Candidates.Count; index++)
+        {
+            <div class="carousel-item @(index == 0 ? "active" : "")">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Name : @Model.Candidates[index].Surname  @Model.Candidates[index].FirstName</h5>
+                        <h5 class="card-title">Applied for @Model.Candidates[index].JobOffer.Description</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Description : @Model.Candidates[index].CandidateDescription</h6>
+                        <p class="card-text">LinkedIn : @Model.Candidates[index].Linkedin</p>
+                        <p class="card-text">Email : @Model.Candidates[index].Email</p>
+                        <button class="btn-primary" onclick="likeCandidateClicked(@index)">Like</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <a class="carousel-control-prev" href="#candidateCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#candidateCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+@*
+@section Styles{
+        <link rel="stylesheet" href="../wwwroot/css/jobOffers.css">
+
+}*@
+
+
+
+@section Scripts {
+    @{
+
+        <script src="~/js/employerInteraction.js" defer asp-append-version="true"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    }
+
+
+    <script>
+        var candidatesData = @Html.Raw(JsonConvert.SerializeObject(Model.Candidates));
+    </script>
+}
+
