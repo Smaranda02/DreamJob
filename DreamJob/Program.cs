@@ -1,5 +1,4 @@
 using DreamJob.BusinessLogic.Employers;
-using DreamJob.BusinessLogic.JobOffers;
 using DreamJob.BusinessLogic.Users;
 using DreamJob.BusinessLogic.Candidates;
 using DreamJob.BusinessLogic.Skills;
@@ -15,6 +14,8 @@ using DreamJob.Common.Enums;
 using DreamJob.BusinessLogic.Studies;
 using DreamJob.BusinessLogic.Experiences;
 using DreamJob.BusinessLogic.CareerFields;
+using DreamJob.BusinessLogic.JobOffers;
+using DreamJob.BusinessLogic.Interactions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/User/Login";
-        options.AccessDeniedPath = "/User/Forbidden";  //view and controller
+        options.AccessDeniedPath = "/User/Unauthorized";
     });
 
 
@@ -44,9 +45,6 @@ builder.Services.AddScoped<CandidateService>();
 builder.Services.AddScoped<SkillsService>();
 builder.Services.AddScoped<StudyService>();
 builder.Services.AddScoped<ExperienceService>();
-builder.Services.AddScoped<CareerFieldsService>();
-
-
 
 builder.Services.AddScoped<RegisterValidator>();
 
@@ -99,6 +97,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=JobOffer}/{action=GetAllJobOffers}/{id?}");
 
 app.Run();

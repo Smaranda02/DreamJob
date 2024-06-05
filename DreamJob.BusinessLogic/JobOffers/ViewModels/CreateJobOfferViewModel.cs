@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace DreamJob.BusinessLogic.JobOffer.ViewModels
+namespace DreamJob.BusinessLogic.JobOffers.ViewModels
 {
     public class CreateJobOfferViewModel
     {
