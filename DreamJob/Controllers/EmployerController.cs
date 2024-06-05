@@ -52,7 +52,7 @@ namespace DreamJob.Controllers
             }
 
             return View(model);
-        }
+        } 
 
 
     }

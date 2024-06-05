@@ -21,6 +21,6 @@ namespace DreamJob.BusinessLogic.Employers.ViewModels {
 
         public string Password { get; set; } = null!;
 
-        public List<CareerFieldViewModel>? CareerFields { get; set; } = new List<CareerFieldViewModel>();
+        public List<CareerFieldViewModel> CareerFields { get; set; } = new List<CareerFieldViewModel>();
     }
 }

@@ -99,7 +99,7 @@ namespace DreamJob.BusinessLogic.Employers
             var newCareerFields = _careerFieldService.CreateNewCareerFields(model.CareerFields, employer.Id);
             var oldCareerFields = _careerFieldService.GetCurrentCareerFields(employer.Id);
 
-            /*var user = new User {
+            var user = new User {
                 Id = currentUser.Id,
                 Email = "email",
                 UserPassword = model.Password,
@@ -110,7 +110,7 @@ namespace DreamJob.BusinessLogic.Employers
             employer.User = user;
             employer.UserId = currentUser.Id;
             _context.Users.Update(user);
-            */
+            
 
             _context.CareerFields.RemoveRange(oldCareerFields);
             _context.CareerFields.AddRange(newCareerFields);
