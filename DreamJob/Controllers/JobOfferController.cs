@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using DreamJob.BusinessLogic.JobOffer.ViewModels;
-using DreamJob.BusinessLogic.JobOffers;
+using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using DreamJob.BusinessLogic.Employers;
 using DreamJob.BusinessLogic.Users.ViewModels;
-
+using Microsoft.AspNetCore.Authorization;
+using DreamJob.BusinessLogic.JobOffers;
 
 namespace DreamJob.Controllers
 {
+    [Authorize]
     public class JobOfferController : Controller
     {
         private JobOfferService _jobOfferService;
@@ -22,6 +23,8 @@ namespace DreamJob.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Employer")]
+
         public IActionResult CreateJobOffer()
         {
             var model = _jobOfferService.CreateJobOfferVM();
@@ -29,6 +32,8 @@ namespace DreamJob.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Employer")]
+
         public IActionResult AddJobOffer(CreateJobOfferViewModel model)
         {
             _jobOfferService.CreateJobOffer(model);
@@ -37,12 +42,16 @@ namespace DreamJob.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Employer")]
+
         public IActionResult EditJobOffer(int id, CreateJobOfferViewModel model) {
             _jobOfferService.UpdateJobOffer(id, model);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
+            [Authorize(Roles = "Employer")]
+
         public IActionResult DeleteJobOffer(int id) {
             var jobOffer = _jobOfferService.GetJobOffer(id);
             return View(jobOffer);
@@ -56,8 +65,12 @@ namespace DreamJob.Controllers
 
         [HttpGet]
         public IActionResult GetAllJobOffers() {
+
             var jobOffers = _jobOfferService.GetJobOffers();
-            return View(jobOffers);
+            return View(new DisplayJobOffersViewModel
+            {
+                JobOffersViewModel= jobOffers
+            });
         }
     }
 }

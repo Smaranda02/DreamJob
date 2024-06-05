@@ -54,7 +54,11 @@ namespace DreamJob.Controllers
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, "AuthenticationCookie");
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties
+            {
+                IsPersistent= false,
+
+            });
             //var x = User.Identity.IsAuthenticated;
 
         }
@@ -70,6 +74,12 @@ namespace DreamJob.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "User");
 
+        }
+
+        [HttpGet]
+        public IActionResult Unauthorized()
+        {
+            return View("Unauthorized");
         }
 
     }

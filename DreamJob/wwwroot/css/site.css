@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.carousel-control-prev {
+    background-color: black;
+}
+.carousel-control-next {
+    background-color: black;
+}
+
+.card-body{
+    text-align: center;
+    width: 50%;
+}
