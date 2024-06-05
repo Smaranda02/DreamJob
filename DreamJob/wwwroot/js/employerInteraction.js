@@ -1,29 +1,21 @@
-﻿var jobOffers = jobOffersData || []
+﻿var candidates = candidatesData || []
 
-var interactions = []
+function likeCandidateClicked(index) {
 
-function likeClicked(index) {
-       
-    console.log(jobOffers[index]);
+    console.log(candidates[index]);
     var currentDate = new Date();
     var date = currentDate.toISOString();
-    //date = `2025-01-01T00:00:00`;
-
 
     var interaction = {
-        CandidateId: 1,
-        JobOfferId: jobOffers[index].Id,
+        CandidateId: candidates[index].Id,
+        JobOfferId: 0,
         InteractionDate: date,
-        FeedbackCandidate: true,
-        FeedbackEmployer: false,
+        FeedbackCandidate: false,
+        FeedbackEmployer: true,
+        EmployerId : 0
     };
 
-    //console.log(interaction);
-
-    //interactions.push(interaction);
-
-
-    fetch(`/Interaction/CreateUpdate`, {
+    fetch(`/Interaction/CreateUpdate/${true}`, {
         method: "post",
         body: JSON.stringify(interaction),
         headers: {
@@ -48,15 +40,3 @@ function likeClicked(index) {
         });
 
 }
-
-function sendData() {
-    if (interactions.length > 0) {
-        const url = '/Interaction/CreateUpdate';
-        const data = JSON.stringify(interactions);
-        console.log(data);
-        // Using navigator.sendBeacon to send data before the user leaves the page
-        navigator.sendBeacon(url, data);
-    }
-}
-
-window.addEventListener("beforeunload", sendData);

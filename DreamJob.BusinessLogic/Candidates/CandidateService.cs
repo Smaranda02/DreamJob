@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using DreamJob.BusinessLogic.Studies;
 using DreamJob.BusinessLogic.Experiences;
+using DreamJob.BusinessLogic.JobOffers.ViewModels;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -144,6 +145,40 @@ namespace DreamJob.BusinessLogic.Candidates
             _context.SaveChanges();
         }
 
+
+        public List<CandidateViewModel> GetCandidates()
+        {
+            var candidatesList = new List<CandidateViewModel>();
+            var currentUserId = _userService.GetCurrentUser().Id;
+
+            var employerId = _context.Employers
+                                     .Where(e => e.UserId == currentUserId)
+                                     .Select( e => e.Id)
+                                     .FirstOrDefault();
+
+            //i want all the candidates that have interacte with at least one job offer created by me, the employer 
+
+            var result = _context.Interactions
+                                        .Include(i => i.JobOffer)
+                                        .Where(i => i.JobOffer.Employer.Id == employerId)
+                                        .Select(i => new { i.Candidate, i.JobOffer})
+                                        .ToList()
+                                        .Select(a => (a.Candidate, a.JobOffer))
+                                        .ToList();
+
+            var candidates = result.Select(r => r.Candidate).ToList();
+            var jobOffers = result.Select(r => r.JobOffer).ToList();
+
+            for(int i = 0; i < candidates.Count; i++)
+            {
+                var candidateViewModel = _mapper.Map<Candidate, CandidateViewModel>(candidates[i]);
+                var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jobOffers[i]);
+                candidateViewModel.JobOffer = jobOfferViewModel;
+                candidatesList.Add(candidateViewModel);
+            }
+
+            return candidatesList;
+        }
        
     }
 }
