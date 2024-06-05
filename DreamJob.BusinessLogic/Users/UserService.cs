@@ -104,6 +104,16 @@ namespace DreamJob.BusinessLogic.Users
 
         }
 
-      
+        public int GetCurrentCandidateId()
+        {
+            return _context.Candidates.Where(c => c.UserId == GetCurrentUser().Id).Select(c => c.Id).FirstOrDefault();
+        }
+
+        public int GetCurrentEmployerId()
+        {
+            return _context.Employers.Where(c => c.UserId == GetCurrentUser().Id).Select(c => c.Id).FirstOrDefault();
+        }
+
+
     }
 }

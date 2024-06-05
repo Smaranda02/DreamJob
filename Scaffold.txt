@@ -14,3 +14,4 @@ MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;" -Outpu
 TO DO 
 Everything async 
 Solve the logged in user after stop problem 
+sa pot vedea toate job offerurile mele 

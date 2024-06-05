@@ -11,8 +11,6 @@ namespace DreamJob.BusinessLogic.Interactions.ViewModels
     public class InteractionViewModel 
     {
         public int? CandidateId { get; set; }
-        public int? EmployerId { get; set; }    
-
         public int? JobOfferId { get; set; }
 
         public DateTime InteractionDate { get; set; }

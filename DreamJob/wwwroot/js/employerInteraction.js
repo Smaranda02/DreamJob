@@ -8,11 +8,10 @@ function likeCandidateClicked(index) {
 
     var interaction = {
         CandidateId: candidates[index].Id,
-        JobOfferId: 0,
+        JobOfferId: candidates[index].JobOffer.Id,
         InteractionDate: date,
-        FeedbackCandidate: false,
+        FeedbackCandidate: true,
         FeedbackEmployer: true,
-        EmployerId : 0
     };
 
     fetch(`/Interaction/CreateUpdate/${true}`, {
