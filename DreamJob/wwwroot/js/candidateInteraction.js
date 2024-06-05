@@ -14,7 +14,6 @@ function likeClicked(index) {
         InteractionDate: date,
         FeedbackCandidate: true,
         FeedbackEmployer: false,
-        EmployerId : 0,
     };
 
     //console.log(interaction);

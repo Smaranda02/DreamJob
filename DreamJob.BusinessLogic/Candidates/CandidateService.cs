@@ -156,7 +156,7 @@ namespace DreamJob.BusinessLogic.Candidates
                                      .Select( e => e.Id)
                                      .FirstOrDefault();
 
-            //i want all the candidates that have interacte with at least one job offer created by me, the employer 
+            //i want all the candidates that have interacted with at least one job offer created by me, the employer 
 
             var result = _context.Interactions
                                         .Include(i => i.JobOffer)

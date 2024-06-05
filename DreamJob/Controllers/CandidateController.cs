@@ -81,5 +81,7 @@ namespace DreamJob.Controllers
                 Candidates = _candidateService.GetCandidates()
             });
         }
+
+       
     }
 }
