@@ -29,6 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Employer\Update.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Employer\Update.cshtml" />
     <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
