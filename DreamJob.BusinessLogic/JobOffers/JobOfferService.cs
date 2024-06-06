@@ -110,7 +110,14 @@ namespace DreamJob.BusinessLogic.JobOffers
             {
                 throw new Exception("Job offer not found");
             }
+
+            var skillsToDelete = _context.JobSkills.Where(j => j.JobOfferId == id);
+            var interactionsToDelete = _context.Interactions.Where(i => i.JobOfferId == id);
+
+            _context.JobSkills.RemoveRange(skillsToDelete);
+            _context.Interactions.RemoveRange(interactionsToDelete);
             _context.JobOffers.Remove(jobOffer);
+
             _context.SaveChanges();
         }
 
