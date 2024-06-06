@@ -49,15 +49,17 @@ namespace DreamJob.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-            [Authorize(Roles = "Employer")]
+        [HttpPost]
+        [Authorize(Roles = "Employer, Admin")]
 
-        public IActionResult DeleteJobOffer(int id) {
-            var jobOffer = _jobOfferService.GetJobOffer(id);
-            return View(jobOffer);
+        public IActionResult Delete(int id) {
+
+            _jobOfferService.DeleteJobOffer(id);
+            return Ok();
         }
 
         [HttpGet]
+        [Authorize(Roles = "Employer")]
         public IActionResult ViewJobOffer(int id) {
             var jobOffer = _jobOfferService.GetJobOffer(id);
             return View(jobOffer);

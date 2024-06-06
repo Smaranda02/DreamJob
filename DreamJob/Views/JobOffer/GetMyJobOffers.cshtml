@@ -1,18 +1,31 @@
 ﻿@model DreamJob.BusinessLogic.JobOffers.ViewModels.DisplayJobOffersViewModel;
 
 <div class="row">
-    @foreach(var jobOffer in Model.JobOffersViewModel)
+    @for(int index = 0; index < Model.JobOffersViewModel.Count; index++)
     {
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Name : @jobOffer.Description</h5>
-                    <p class="card-text">Employer  : @jobOffer.Employer</p>
-                    <p class="card-text">Office Location : @jobOffer.OfficeLocation</p>
-                    <p class="card-text">Salary : @jobOffer.Salary</p>
-                    <a href="#" class="btn btn-warning">Delete</a>
+                    <h5 class="card-title">Name : @Model.JobOffersViewModel[index].Description</h5>
+                    <p class="card-text">Employer  : @Model.JobOffersViewModel[index].Employer</p>
+                    <p class="card-text">Office Location : @Model.JobOffersViewModel[index].OfficeLocation</p>
+                    <p class="card-text">Salary : @Model.JobOffersViewModel[index].Salary</p>
+                    <a onclick="deleteJobOffer(@Model.JobOffersViewModel[index].Id)" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
     }
 </div>
+
+
+
+
+@section Scripts {
+    @{
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="~/js/deleteJobOffer.js" defer asp-append-version="true"></script>
+    }
+
+
+}
+

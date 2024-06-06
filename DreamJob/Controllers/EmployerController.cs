@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DreamJob.BusinessLogic.Employers.ViewModels;
 using DreamJob.BusinessLogic.Employers;
+using DreamJob.BusinessLogic.Candidates;
 
 namespace DreamJob.Controllers
 {
     public class EmployerController : Controller
     {
         private EmployerService _employerService;
-        public EmployerController(EmployerService employerService)
+        private readonly RegisterEmployerValidator _registerValidator;
+        public EmployerController(EmployerService employerService, RegisterEmployerValidator registerValidator)
         {
             _employerService = employerService;
+            _registerValidator = registerValidator;
         }
 
         [HttpGet]
@@ -22,13 +25,21 @@ namespace DreamJob.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+
+            var validationResult = _registerValidator.Validate(model);
+            if (validationResult.IsValid && ModelState.IsValid)
             {
                 _employerService.Register(model);
                 return RedirectToAction("Login", "User");
             }
-
-            return View(model);
+            else
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return View(model);
+            }
            
         }
 

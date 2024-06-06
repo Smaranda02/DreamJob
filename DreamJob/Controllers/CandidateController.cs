@@ -28,14 +28,18 @@ namespace DreamJob.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel model)
         {
-            //var validationResult = _registerValidator.Validate(model, ModelState);
-            if (ModelState.IsValid)
+            var validationResult = _registerValidator.Validate(model);
+            if (validationResult.IsValid)
             {
                 _candidateService.Register(model);
                 return RedirectToAction("Login", "User");
             }
             else
             {
+                foreach (var error in validationResult.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
                 return View(model);
             }
         }
