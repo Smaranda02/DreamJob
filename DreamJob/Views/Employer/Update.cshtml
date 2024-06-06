@@ -33,6 +33,16 @@
     </div>
 
     <div>
+        <label asp-for="Password">Password</label>
+        <input id="employerPassword" asp-for="Password" />
+    </div>
+
+    <div>
+        <label asp-for="Email">Email</label>
+        <input id="employerMail" asp-for="Email" />
+    </div>
+
+    <div>
         <button type="button" id="add-careerField" class="btn btn-success" onclick="addNewCareerFieldRow()">Add Career Field</button>
 
     </div>
@@ -51,11 +61,11 @@
                     <tr class="careerField" data-id="@item.Id">
                         <td>
                             <span class="careerField-text">@item.CareerFieldName</span>
-                            <input type="text" value="@item.CareerFieldName"/>
+                            <input type="hidden" class="careerField-input form-control" value="@item.CareerFieldName" />
                         </td>
                         <td>
-                            <button type="button" class="remove-work-button btn btn-danger" onclick="removeWork(this.closest('tr'))"> Remove </button>
-                            <button type="button" class="edit-work btn btn-primary" onclick="editCareerField(this)">
+                            <button type="button" class="remove-careerField-button btn btn-danger" onclick="removeCareerField(this.closest('tr'))"> Remove </button>
+                            <button type="button" class="edit-careerField btn btn-primary" onclick="editCareerField(this)">
                                 Edit
                              </button>
                         </td>

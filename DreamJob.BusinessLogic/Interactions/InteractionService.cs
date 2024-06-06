@@ -104,15 +104,7 @@ namespace DreamJob.BusinessLogic.Interactions
             foreach(var match in matches)
             {
                 var matchViewModel = _mapper.Map<Interaction, MatchViewModel>(match);
-                //var matchViewModel = new MatchViewModel { 
-                //    FirstName = match.Candidate.FirstName,
-                //    Surname= match.Candidate.Surname,
-                //    EmployerName = match.JobOffer.Employer.EmployerName,
-                //    EmployerId = match.JobOffer.EmployerId,
-                //    JobDescription = match.JobOffer.JobDescription,
-                //    CandidateId = match.Candidate.Id
-                //};
-
+               
                 matchesList.Add(matchViewModel);
             }
 
