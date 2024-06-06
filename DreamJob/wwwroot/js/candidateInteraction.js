@@ -9,17 +9,42 @@ function likeClicked(index) {
     var date = currentDate.toISOString();
 
     var interaction = {
-        CandidateId: 1,
+        CandidateId: 0,
         JobOfferId: jobOffers[index].Id,
         InteractionDate: date,
         FeedbackCandidate: true,
         FeedbackEmployer: false,
     };
 
-    //console.log(interaction);
+    postData(interaction);
 
-    //interactions.push(interaction);
+}
 
+
+function dislikeClicked(index) {
+
+    console.log(jobOffers[index]);
+    var currentDate = new Date();
+    var date = currentDate.toISOString();
+
+    var interaction = {
+        CandidateId: 0,
+        JobOfferId: jobOffers[index].Id,
+        InteractionDate: date,
+        FeedbackCandidate: false,
+        FeedbackEmployer: false,
+    };
+
+   
+    postData(interaction);
+
+}
+
+
+
+
+
+function postData(interaction) {
 
     fetch(`/Interaction/CreateUpdate/${false}`, {
         method: "post",
@@ -46,3 +71,5 @@ function likeClicked(index) {
         });
 
 }
+
+
