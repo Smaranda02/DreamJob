@@ -43,24 +43,54 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="GetAllJobOffers">Discover</a>
                                 </li>
-
-                              
-                            }
-
-                            else
-                            {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="GetCandidates">Discover</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Update">Complete your profile</a>
                                 </li>
-
-                              
-                            }
-
-
+                                
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Interaction" asp-action="Matches">Matches</a>
                             </li>
 
+                              
+                            }
+
+                            else if (CurrentUserViewModel.Role == (int)Roles.Employer)
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="CreateJobOffer">Create Job Offer</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="GetMyJobOffers">Get My Job Offers</a>
+
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Employer" asp-action="Update">Update your profile</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="GetCandidates">Discover</a>
+                                </li>
+
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Interaction" asp-action="Matches">Matches</a>
+                                </li>
+                            }
+
+                             else
+                             {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="GetAllJobOffersForAdmin">Get All Job Offers</a>
+
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="GetAllCandidates">Get All Candidates</a>
+
+                                </li>
+                             }
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark">Hello @CurrentUserViewModel.Username !</a>
@@ -70,6 +100,8 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                             </li>  
                         }
+
+
                         else
                         {
                             <li class="nav-item">
@@ -84,27 +116,6 @@
                             </li>
                         }
 
-
-                        @if (CurrentUserViewModel.Role == 3)
-                        {
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="CreateJobOffer">Create Job Offer</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="JobOffer" asp-action="GetAllJobOffers">Get All Job Offers</a>
-
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Employer" asp-action="Update">Update your profile</a>
-                            </li>
-                        }
-                        else if (CurrentUserViewModel.Role == 2) {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Candidate" asp-action="Update">Complete your profile</a>
-                            </li>
-                        }
                     </ul>
                 </div>
             </div>
