@@ -45,14 +45,77 @@ form {
         width: 500px;
     }
 
-.carousel-control-prev {
-    background-color: black;
-}
-.carousel-control-next {
-    background-color: black;
+
+#greeting {
+    margin-left: auto;
 }
 
-.card-body{
-    text-align: center;
-    width: 50%;
+    #greeting a {
+        margin: 0;
+    }
+
+
+/* Style for the carousel */
+
+.carousel-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
+
+.carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.card {
+    width: 80%;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: none;
+}
+
+
+.card-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+.card-subtitle {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.button-like {
+    background-color: red;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .button-like i {
+        margin: 0;
+    }
+
+    .button-like:hover {
+        background-color: darkred;
+    }
+
