@@ -42,7 +42,7 @@ namespace DreamJob.BusinessLogic.Interactions
                                            .Where(i => i.JobOffer.EmployerId == employerId && i.JobOfferId == interaction.JobOfferId)
                                            .FirstOrDefault();
 
-                realInteraction.FeedbackEmployer = true;
+                realInteraction.FeedbackEmployer = interaction.FeedbackEmployer;
                 _context.Interactions.Update(realInteraction);
 
             }
@@ -61,7 +61,8 @@ namespace DreamJob.BusinessLogic.Interactions
 
                 else
                 {
-                    //adaug logica de dat dislike
+                    realInteraction.FeedbackCandidate = interaction.FeedbackCandidate;
+                    _context.Interactions.Update(realInteraction);
                 }
 
             }
