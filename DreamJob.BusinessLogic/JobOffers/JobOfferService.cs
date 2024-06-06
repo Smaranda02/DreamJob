@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DreamJob.BusinessLogic.Skills;
 using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using AutoMapper;
+using DreamJob.BusinessLogic.Users;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -21,11 +22,13 @@ namespace DreamJob.BusinessLogic.JobOffers
         private readonly DreamJobContext _context;
         private readonly SkillsService _skillsService;
         private readonly IMapper _mapper;
-        public JobOfferService(DreamJobContext context, SkillsService skillsService, IMapper mapper)
+        private readonly UserService _userService;
+        public JobOfferService(DreamJobContext context, SkillsService skillsService, IMapper mapper, UserService userService)
         {
             _context = context;
             _skillsService = skillsService;
             _mapper = mapper;
+            _userService = userService;
         }
 
         public CreateJobOfferViewModel CreateJobOfferVM()
@@ -59,14 +62,30 @@ namespace DreamJob.BusinessLogic.JobOffers
 
         }
 
-        public List<JobOfferViewModel> GetJobOffers()
+        public List<JobOfferViewModel> GetMyJobOffers()
         {
             var jobOffers = _context.JobOffers
-                            .Where(j => j.EmployerId == 6)
-                            .Include(j => j.Employer).ToList();
+                            .Include(j => j.Employer)
+                            .Where(j => j.EmployerId == _userService.GetCurrentEmployerId())
+                            .ToList();
             var jobOfferList = new List<JobOfferViewModel>();
 
             foreach(var jo in jobOffers)
+            {
+                var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jo);
+                jobOfferList.Add(jobOfferViewModel);
+            }
+            return jobOfferList;
+        }
+
+
+        public List<JobOfferViewModel> GetAllJobOffers()
+        {
+            var jobOffers = _context.JobOffers
+                            .Include(j => j.Employer).ToList();
+            var jobOfferList = new List<JobOfferViewModel>();
+
+            foreach (var jo in jobOffers)
             {
                 var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jo);
                 jobOfferList.Add(jobOfferViewModel);

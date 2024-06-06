@@ -21,5 +21,5 @@ public partial class Employer
 
     public virtual ICollection<JobOffer> JobOffers { get; } = new List<JobOffer>();
 
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; }
 }

@@ -82,6 +82,16 @@ namespace DreamJob.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult GetAllCandidates()
+        {
+            return View(new DisplayCandidatesViewModel
+            {
+                Candidates = _candidateService.GetAllCandidates()
+            });
+        }
+
        
     }
 }

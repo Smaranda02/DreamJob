@@ -10,7 +10,7 @@ using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.CareerFields.ViewModels;
 using DreamJob.BusinessLogic.CareerFields;
 using Microsoft.EntityFrameworkCore.Update.Internal;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace DreamJob.BusinessLogic.CareerFields {
     public class CareerFieldsService {
@@ -30,7 +30,6 @@ namespace DreamJob.BusinessLogic.CareerFields {
 
             foreach (var careerField in careerFields) {
                 var newCareerField = _mapper.Map<CareerFieldViewModel, CareerField>(careerField);
-                newCareerField.Id = candidateId;
                 newCareerFields.Add(newCareerField);
             }
 
@@ -58,17 +57,20 @@ namespace DreamJob.BusinessLogic.CareerFields {
         }
 
         public List<CareerFieldViewModel> GetEmployerCareerFields(int employerId) {
-            var careerFields = _context.CareerFields
-                                    .Where(s => s.Id == employerId)
+            var careerFields = _context.EmployersCareerFields
+                                    .Include(c => c.CareerField)
+                                    .Where(s => s.EmployerId == employerId)
+                                    .Select(c => c.CareerField)
                                     .ToList();
+
             var careerFieldListVM = new List<CareerFieldViewModel>();
+
             foreach (var careerField in careerFields) {
                 var careerFieldVM = _mapper.Map<CareerField, CareerFieldViewModel>(careerField);
                 careerFieldListVM.Add(careerFieldVM);
             }
 
             return careerFieldListVM;
-
         }
             
 
