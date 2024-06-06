@@ -3,8 +3,7 @@
 function likeCandidateClicked(index) {
 
     console.log(candidates[index]);
-    var currentDate = new Date();
-    var date = currentDate.toISOString();
+    var date = new Date().toISOString;
 
     var interaction = {
         CandidateId: candidates[index].Id,
@@ -13,6 +12,32 @@ function likeCandidateClicked(index) {
         FeedbackCandidate: true,
         FeedbackEmployer: true,
     };
+
+    postData(interaction);
+
+}
+
+
+function dislikeCandidateClicked(index) {
+
+    console.log(candidates[index]);
+    var currentDate = new Date();
+    var date = currentDate.toISOString();
+
+    var interaction = {
+        CandidateId: candidates[index].Id,
+        JobOfferId: candidates[index].JobOffer.Id,
+        InteractionDate: date,
+        FeedbackCandidate: true,
+        FeedbackEmployer: false,
+    };
+
+    postData(interaction);
+
+}
+
+
+function postData(interaction) {
 
     fetch(`/Interaction/CreateUpdate/${true}`, {
         method: "post",
