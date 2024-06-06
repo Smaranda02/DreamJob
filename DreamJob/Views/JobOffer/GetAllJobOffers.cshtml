@@ -4,6 +4,10 @@
 @using Newtonsoft.Json;
 @model DreamJob.BusinessLogic.JobOffers.ViewModels.DisplayJobOffersViewModel
 
+<style>
+
+</style>
+
 <div id="jobOfferCarrousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
         @for(int index = 0; index < Model.JobOffersViewModel.Count; index++)
@@ -11,24 +15,38 @@
             <div class="carousel-item @(index == 0 ? "active" : "")">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@Model.JobOffersViewModel[index].Employer</h5>
+                        <h5 class="card-title">@Model.JobOffersViewModel[index].EmployerName</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@Model.JobOffersViewModel[index].Description</h6>
                         <p class="card-text">@Model.JobOffersViewModel[index].OfficeLocation</p>
                         <p class="card-text"><small class="text-muted">@Model.JobOffersViewModel[index].Salary</small></p>
-                        <button class="btn-primary" onclick="likeClicked(@index)">Like</button>
+                        <a href =@Model.EmployerLinkedin class="card-link">Linkedin</a>
+
+                        <div class="interaction d-flex justify-content-between mt-3">
+
+                            <a class="carousel-control-prev" href="#jobOfferCarrousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <i class="fas fa-times-circle"></i>
+                                <span class="sr-only">Dislike</span>
+                            </a>
+
+                            <a class="carousel-control-next" href="#jobOfferCarrousel" role="button" data-slide="next" onclick="likeClicked(@index)">
+                                <i class="fas fa-heart"></i>
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                
+                                <span class="sr-only">Like</span>
+                            </a>
+
+                        
+
+                        
+                    </div>
+
+                    
                     </div>
                 </div>
             </div>
         }
     </div>
-    <a  class="carousel-control-prev" href="#jobOfferCarrousel" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-    <a  class="carousel-control-next" href="#jobOfferCarrousel" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
 
 @*
