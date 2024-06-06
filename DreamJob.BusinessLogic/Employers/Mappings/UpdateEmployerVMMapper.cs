@@ -8,10 +8,13 @@ using DreamJob.Entities.Entities;
 using DreamJob.BusinessLogic.Employers.ViewModels;
 
 namespace DreamJob.BusinessLogic.Employers.Mappings {
-    public class UpdateEmployerVMMapper : Profile {
+    public class UpdateEmployerVMMapper : Profile 
+    {
         public UpdateEmployerVMMapper() {
             CreateMap<Employer, UpdateEmployerViewModel>()
-                .ForMember(a => a.Password, a => a.MapFrom(s => s.User.UserPassword));
+                .ForMember(a => a.Password, a => a.MapFrom(s => s.User.UserPassword))
+                .ForMember(a => a.Email, a => a.MapFrom(s => s.User.Email));
+            ;
         }
     }
 }

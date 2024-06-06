@@ -1,0 +1,18 @@
+﻿@model DreamJob.BusinessLogic.Candidates.ViewModels.DisplayCandidatesViewModel;
+
+<div class="row">
+    @for (int index = 0; index < Model.Candidates.Count; index++)
+{
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Name : @Model.Candidates[index].Surname  @Model.Candidates[index].FirstName</h5>
+                    <p class="card-text">Description : @Model.Candidates[index].CandidateDescription</p>
+                    <p class="card-text">Email : @Model.Candidates[index].Email</p>
+                    <p class="card-text">LinkedIn : @Model.Candidates[index].Linkedin</p>
+        <a href="#" class="btn btn-warning">Delete</a>
+      </div>
+    </div>
+  </div>
+}
+</div>

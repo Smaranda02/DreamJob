@@ -18,20 +18,27 @@ function manipulateData(data) {
         careerFieldElements.forEach(function (careerFieldElement) {
             var careerFieldName = careerFieldElement.querySelector('.careerField-input').value;
 
-            careerFields.push(careerFieldName);
+            careerFields.push({
+                CareerFieldName : careerFieldName
+            });
         
-    });
+        });
+
+
 
     var model = {
         Id: data.id,
         EmployerName: document.getElementById('employerName').value,
         EmployerDescription: document.getElementById('employerDescription').value,
         OfficeLocation: document.getElementById('officeLocation').value,
-        CareerFields: careerFields
+        CareerFields: careerFields,
+        EmployerLinkedin: document.getElementById('employerLinkedin').value,
+        Password: document.getElementById('employerPassword').value,
+        Email : document.getElementById('employerMail').value
         }
 
         console.log(model);
-    postData(model);
+        postData(model);
     });
 }
 
@@ -53,7 +60,7 @@ function editCareerField(button) {
     const tr = button.closest('tr');
 
     const isEditing = tr.classList.toggle('editing');
-    const removeButton = tr.querySelector('.removeCareerField');
+    const removeButton = tr.querySelector('.remove-careerField-button');
 
     const careerFieldSpan = tr.querySelector('.careerField-text');
     const careerFieldInput = tr.querySelector('.careerField-input'); // numele
@@ -99,17 +106,54 @@ function addNewCareerFieldRow() {
         <span class="careerField-text" style="display:none;"></span>
         <input type="text" class="careerField-input form-control" value =""/>
     </td>
+
+        <td>
+            <button type="button" class="remove-careerField-button btn btn-secondary" onclick="cancelEditCareerField(this.closest('tr'))">Cancel</button>
+            <button type="button" class="edit-carerrField btn btn-primary" onclick="saveNewCareerFieldRow(this)">Save</button>
+        </td>
     `;
     tableBody.appendChild(newRow);
 }
 
-function removeWork(tr) {
+
+
+
+
+function cancelEditCareerField(tr) {
+
+    // Exit edit mode without saving changes
+    const careerFieldSpan = tr.querySelector('.careerField-text');
+    const careerFieldInput = tr.querySelector('.careerField-input');
+
+    careerFieldInput.type = 'hidden';
+    careerFieldSpan.style.display = 'inline-block';
+    careerFieldInput.style.display = 'none';
+
+    // Change cancel button back to remove button
+    const removeButton = tr.querySelector('.remove-careerField-button');
+    removeButton.textContent = 'Remove';
+    removeButton.classList.remove('btn-secondary');
+    removeButton.classList.add('btn-danger');
+    removeButton.onclick = function () { removeCareerField(tr); };
+
+    // Change edit button text back to 'Edit'
+    const editButton = tr.querySelector('.edit-careerField');
+    editButton.textContent = 'Edit';
+
+    // Remove the editing class
+    tr.classList.remove('editing');
+    removeCareerField(tr);
+}
+
+
+
+function removeCareerField(tr) {
     tr.remove();
 }
 
 
-function saveNewCareerFieldRow() {
-    const tr = button.closeset('tr');
+function saveNewCareerFieldRow(button) {
+    const tr = button.closest('tr');
 
     const careerFieldInput = tr.querySelector('.careerField-input');
 
@@ -123,7 +167,7 @@ function saveNewCareerFieldRow() {
     careerFieldSpan.style.display = 'inline-block';
     careerFieldInput.style.display = 'none';
 
-    const removeButton = tr.querySelector('.removeCareerField');
+    const removeButton = tr.querySelector('.remove-careerField-button');
     removeButton.textContent = 'Remove';
     removeButton.classList.remove('btn-secondary');
     removeButton.classList.add('btn-danger');

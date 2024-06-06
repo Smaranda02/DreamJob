@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DreamJob.BusinessLogic.CareerFields.ViewModels {
     public class CareerFieldViewModel {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string CareerFieldName { get; set; } = null!;
     }
 }

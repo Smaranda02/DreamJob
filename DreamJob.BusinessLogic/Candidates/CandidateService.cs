@@ -179,6 +179,20 @@ namespace DreamJob.BusinessLogic.Candidates
 
             return candidatesList;
         }
+
+        public List<CandidateViewModel> GetAllCandidates()
+        {
+            var candidates = _context.Candidates.ToList();
+            var candidatesList = new List<CandidateViewModel>();
+
+            foreach(var candidate in candidates)
+            {
+                var candidateViewModel = _mapper.Map<Candidate, CandidateViewModel>(candidate);
+                candidatesList.Add(candidateViewModel);
+            }
+
+            return candidatesList;
+        }
        
     }
 }
