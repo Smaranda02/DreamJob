@@ -101,7 +101,7 @@ namespace DreamJob.BusinessLogic.Employers
 
             var user = new User {
                 Id = currentUser.Id,
-                Email = "email",
+                Email = model.Email,
                 UserPassword = model.Password,
                 RoleId = currentUser.Role,
                 Username = currentUser.Username
@@ -113,15 +113,24 @@ namespace DreamJob.BusinessLogic.Employers
             
 
             _context.CareerFields.RemoveRange(oldCareerFields);
+            _context.SaveChanges();
             _context.CareerFields.AddRange(newCareerFields);
             _context.SaveChanges();
 
-            var careerFields = _context.EmployersCareerFields.Where(s => s.Id == employer.Id).ToList();
+            //employer.EmployersCareerFields.Clear();
 
-            employer.EmployersCareerFields.Clear();
+            var empCareers = _context.EmployersCareerFields.Where(c => c.EmployerId == employer.Id).ToList();
+            _context.EmployersCareerFields.RemoveRange(empCareers);
+            _context.SaveChanges();
 
-            foreach (var careerField in careerFields) {
-                employer.EmployersCareerFields.Add(careerField);
+            foreach (var careerField in newCareerFields) {
+                _context.EmployersCareerFields.Add(new EmployersCareerField 
+                { 
+                    CareerFieldId = careerField.Id,
+                    EmployerId = employer.Id,
+                    Employer = employer,
+                    CareerField = careerField
+                });
             }
 
             _context.Employers.Update(employer);
