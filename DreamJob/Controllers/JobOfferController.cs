@@ -64,13 +64,40 @@ namespace DreamJob.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllJobOffers() {
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetAllJobOffersForAdmin() {
 
-            var jobOffers = _jobOfferService.GetJobOffers();
-            return View(new DisplayJobOffersViewModel
+            var jobOffers = _jobOfferService.GetAllJobOffers();
+            return View("GetMyJobOffers",
+                new DisplayJobOffersViewModel
             {
                 JobOffersViewModel= jobOffers
             });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Candidate")]
+        public IActionResult GetAllJobOffers()
+        {
+
+            var jobOffers = _jobOfferService.GetAllJobOffers();
+            return View(new DisplayJobOffersViewModel
+            {
+                JobOffersViewModel = jobOffers
+            });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        public IActionResult GetMyJobOffers()
+        {
+
+            var jobOffers = _jobOfferService.GetMyJobOffers();
+            var model = new DisplayJobOffersViewModel
+            {
+                JobOffersViewModel = jobOffers
+            };
+            return View(model);
         }
     }
 }
