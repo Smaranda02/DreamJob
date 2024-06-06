@@ -4,6 +4,7 @@
 @using Newtonsoft.Json;
 @model DreamJob.BusinessLogic.Candidates.ViewModels.DisplayCandidatesViewModel
 
+<h1> Discover your candidates </h1>
 <div id="candidateCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
         @for (int index = 0; index < Model.Candidates.Count; index++)
@@ -16,24 +17,33 @@
                         <h6 class="card-subtitle mb-2 text-muted">Description : @Model.Candidates[index].CandidateDescription</h6>
                         <p class="card-text">LinkedIn : @Model.Candidates[index].Linkedin</p>
                         <p class="card-text">Email : @Model.Candidates[index].Email</p>
-                        <button class="btn-primary" onclick="likeCandidateClicked(@index)">Like</button>
+                        <div class="d-flex justify-content-between">
+                        <button class="button-like" onclick="likeCandidateClicked(@index)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+
+                        <button class="button-like" onclick="dislikeCandidateClicked(@index)">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
+
     <a class="carousel-control-prev" href="#candidateCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
+        <i class="fas fa-chevron-left"></i>
     </a>
     <a class="carousel-control-next" href="#candidateCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
+        <i class="fas fa-chevron-right"></i>
     </a>
 </div>
 
-@*
-@section Styles{
+
+@*section Styles{
         <link rel="stylesheet" href="../wwwroot/css/jobOffers.css">
 
 }*@
