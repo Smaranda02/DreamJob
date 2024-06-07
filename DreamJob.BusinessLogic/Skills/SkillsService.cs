@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DreamJob.BusinessLogic.Skills.ViewModels;
 
 namespace DreamJob.BusinessLogic.Skills {
     public class SkillsService {
@@ -35,6 +36,19 @@ namespace DreamJob.BusinessLogic.Skills {
                     Value = s.SkillId.ToString(),
                 })
                 .ToList();
+        }
+
+        public List<SkillViewModel> GetJobOfferSkills(int id) {
+            var skills = _context.JobSkills
+                .Where(s => s.JobOfferId == id)
+                .ToList();
+            var skillListVM = new List<SkillViewModel>();
+            foreach (var skill in skills) {
+                var skillVM = _mapper.Map<JobSkill, SkillViewModel>(skill);
+                skillListVM.Add(skillVM);
+            }
+            return skillListVM;
+
         }
 
 

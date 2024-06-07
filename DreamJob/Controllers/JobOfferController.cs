@@ -101,5 +101,27 @@ namespace DreamJob.Controllers
             };
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Update() {
+            var model = _jobOfferService.GetUpdateJobOfferVM();
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult GetJsonForUpdate() {
+            var model = _jobOfferService.GetUpdateJobOfferVM();
+            return Ok(model);
+        }
+
+        /*[HttpPost]
+        public IActionResult Update([FromBody] UpdateJobOfferViewModel model) {
+            if (ModelState.IsValid) {
+                _jobOfferService.Update(model);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        */
     }
 }

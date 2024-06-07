@@ -14,9 +14,13 @@ namespace DreamJob.BusinessLogic.JobOffers.ViewModels
 
         public string Description { get; set; } = null!;
 
-        public string Employer { get; set; } = null!;
+        public string EmployerName { get; set; } = null!;
         public string OfficeLocation { get; set; } = null!;
         public string EmployerLinkedin { get; set; } = null!;
+
+        public List<string> JobSkills { get; set; } = new List<string>();
+
+
 
     }
 }
