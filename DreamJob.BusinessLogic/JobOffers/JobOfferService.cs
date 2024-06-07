@@ -13,6 +13,8 @@ using DreamJob.BusinessLogic.Skills;
 using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using AutoMapper;
 using DreamJob.BusinessLogic.Users;
+using DreamJob.BusinessLogic.Users.Mappings;
+using DreamJob.BusinessLogic.Users.ViewModels;
 
 namespace DreamJob.BusinessLogic.JobOffers
 {
@@ -23,12 +25,15 @@ namespace DreamJob.BusinessLogic.JobOffers
         private readonly SkillsService _skillsService;
         private readonly IMapper _mapper;
         private readonly UserService _userService;
+        private CurrentUserViewModel currentUser;
         public JobOfferService(DreamJobContext context, SkillsService skillsService, IMapper mapper, UserService userService)
         {
             _context = context;
             _skillsService = skillsService;
             _mapper = mapper;
             _userService = userService;
+            currentUser = _userService.GetCurrentUser();
+
         }
 
         public CreateJobOfferViewModel CreateJobOfferVM()
@@ -147,6 +152,30 @@ namespace DreamJob.BusinessLogic.JobOffers
             //jobOffer.JobIndustry = model.JobIndustry;
             _context.SaveChanges();
         }
+
+        public UpdateJobOfferViewModel GetUpdateJobOfferVM() {
+            var jobOffer = _context.JobOffers
+                .Include(j => j.Employer)
+                .FirstOrDefault(j => j.EmployerId == currentUser.Id);
+
+            var skills = _skillsService.GetJobOfferSkills(jobOffer.Id);
+            var jobOfferToUpdate = _mapper.Map<JobOffer, UpdateJobOfferViewModel>(jobOffer);
+            jobOfferToUpdate.JobSkills = skills;
+
+            return jobOfferToUpdate;
+        }
+
+        /*public Update(UpdateJobOfferViewModel model) {
+            var jobOffer = _mapper.Map<UpdateJobOfferViewModel, JobOffer>(model);
+            var newSkills = _skillsService.CreateJobSkill(model.SkillIds, jobOffer);
+            var oldSkills = _skillsService.GetJobOfferSkills(jobOffer.Id);
+
+            var employer = new Employer {
+                Id = currentUser.Id,
+                EmployerName = model.EmployerName,
+                EmployerDescription = model.EmployerDescription,
+            };
+        }*/
 
     }
 }

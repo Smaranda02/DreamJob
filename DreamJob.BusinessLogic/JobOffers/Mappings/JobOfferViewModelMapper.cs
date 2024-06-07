@@ -14,7 +14,7 @@ namespace DreamJob.BusinessLogic.JobOffers.Mappings
         public JobOfferViewModelMapper() 
         {
             CreateMap<JobOffer, JobOfferViewModel>()
-                .ForMember(a => a.Employer, a => a.MapFrom(s => s.Employer.EmployerName))
+                .ForMember(a => a.EmployerName, a => a.MapFrom(s => s.Employer.EmployerName))
                 .ForMember(a => a.Description, a => a.MapFrom(s => s.JobDescription))
                 .ForMember(a => a.OfficeLocation, a => a.MapFrom(s => s.Employer.OfficeLocation))
                 ;
