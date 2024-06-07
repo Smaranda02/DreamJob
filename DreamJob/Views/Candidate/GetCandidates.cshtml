@@ -21,16 +21,15 @@
 
                     <div class="interaction d-flex justify-content-between mt-3">
 
-                            <a class="carousel-control-prev" href="#candidateCarousel" role="button" data-slide="prev">
+                            <a class="carousel-control-prev" href="#candidateCarousel" role="button" data-slide="next" onclick="dislikeCandidateClicked(@index)">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <i class="fas fa-times-circle"></i>
                                 <span class="sr-only">Dislike</span>
                             </a>
                         
-                        <a class="carousel-control-next" href="#candidateCarousel" role="button" data-slide="next" onclick="likeCandidateClicked()">
+                        <a class="carousel-control-next" href="#candidateCarousel" role="button" data-slide="next" onclick="likeCandidateClicked(@index)">
                             <i class="fas fa-heart"></i>
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            
                             <span class="sr-only">Like</span>
                         </a>
 
@@ -43,15 +42,7 @@
             
         }
     </div>
-
-
-            <a class="carousel-control-prev" href="#candidateCarousel" onclick="dislikeCandidateClicked(@index)" role="button" data-slide="next">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </a>
-            <a class="carousel-control-next" href="#candidateCarousel" onclick="likeCandidateClicked(@index)" role=" button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-             </a>
-        }
+        
     </div>
 
   

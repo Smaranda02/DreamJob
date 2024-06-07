@@ -1,4 +1,11 @@
-﻿@model DreamJob.BusinessLogic.Interactions.ViewModels.DisplayMatchesViewModel
+﻿@using Newtonsoft.Json;
+@model DreamJob.BusinessLogic.Interactions.ViewModels.DisplayMatchesViewModel
+
+
+<div id="search">
+    <input id="searchBar" type="text" placeholder="Search by name..." onkeyup="searchItems()" />
+    <button class="btn btn-warning">Search</button>
+</div>
 
 
 <div class="row">
@@ -9,14 +16,14 @@
                 <div class="card-body">
                     @if (Model.IsCandidate)
                     {
-                        <h5 class="card-title">Match with @match.EmployerName</h5>
+                        <h5 class="card-title">Match with <span class="name"> @match.EmployerName  </span></h5>
                         <p class="card-text">For job @match.JobDescription</p>
                         <a href="#" class="btn btn-primary">Edit interaction</a>
                     }
 
                     else
                     {
-                        <h5 class="card-title">Match with @match.FirstName @match.Surname</h5>
+                        <h5 class="card-title">Match with <span class="name">@match.FirstName @match.Surname </span></h5>
                         <p class="card-text">For job @match.JobDescription</p>
                         <a href="#" class="btn btn-primary">Edit interaction</a>
                     }
@@ -28,3 +35,21 @@
 
 
 </div>
+
+
+                        
+
+@section Scripts {
+    @{
+
+        <script src="~/js/search.js" defer asp-append-version="true"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    }
+
+
+
+    <script>
+        var matchesData = @Html.Raw(JsonConvert.SerializeObject(Model.Matches));
+    </script>
+}
+

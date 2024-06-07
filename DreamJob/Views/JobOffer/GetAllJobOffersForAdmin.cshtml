@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Name : @Model.JobOffersViewModel[index].Description</h5>
-                    <p class="card-text">Employer  : @Model.JobOffersViewModel[index].Employer</p>
+                    <p class="card-text">Employer  : @Model.JobOffersViewModel[index].EmployerName</p>
                     <p class="card-text">Office Location : @Model.JobOffersViewModel[index].OfficeLocation</p>
                     <p class="card-text">Salary : @Model.JobOffersViewModel[index].Salary</p>
                     <a onclick="deleteJobOffer(@Model.JobOffersViewModel[index].Id)" class="btn btn-danger">Delete</a>

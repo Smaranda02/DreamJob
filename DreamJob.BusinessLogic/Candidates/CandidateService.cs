@@ -162,6 +162,7 @@ namespace DreamJob.BusinessLogic.Candidates
 
             var result = _context.Interactions
                                         .Include(i => i.JobOffer)
+                                        .Include(i => i.Candidate.User)
                                         .Where(i => i.JobOffer.Employer.Id == employerId)
                                         .Select(i => new { i.Candidate, i.JobOffer})
                                         .ToList()
