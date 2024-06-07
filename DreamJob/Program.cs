@@ -50,8 +50,7 @@ builder.Services.AddScoped<InteractionService>();
 
 
 builder.Services.AddScoped<RegisterValidator>();
-
-
+builder.Services.AddScoped<RegisterEmployerValidator>();
 
 builder.Services.AddScoped(s =>
 {

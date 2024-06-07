@@ -15,38 +15,49 @@
     <div>
         <label asp-for="EmployerName">Name</label>
         <input asp-for="EmployerName"/>
+        <span asp-validation-for="EmployerName" class="text-danger"></span>
+
     </div>
 
      <div>
         <label asp-for="Email">Email</label>
         <input asp-for="Email"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
+
     </div>
 
     <div>
         <label asp-for="Password">Password</label>
         <input asp-for="Password"/>
+        <span asp-validation-for="Password" class="text-danger"></span>
+
     </div>
 
     <div>
         <label asp-for="ConfirmPassword">Confirm your password</label>
         <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
     </div>
 
     <div>
         <label asp-for="OfficeLocation">Office Location</label>
         <input asp-for="OfficeLocation"/>
+        <span asp-validation-for="OfficeLocation" class="text-danger"></span>
     </div>
 
     <div>
         <div class="description-box">
         <label asp-for="EmployerDescription">Description</label>
         <textarea asp-for="EmployerDescription"></textarea>
+        <span asp-validation-for="EmployerDescription" class="text-danger"></span>
         </div>
     </div>
 
     <div>
         <label asp-for="EmployerLinkedin">Linkedin</label>
         <input asp-for="EmployerLinkedin" />
+        <span asp-validation-for="EmployerLinkedin" class="text-danger"></span>
     </div>
 
     @if (!ViewData.ModelState.IsValid)
