@@ -88,12 +88,22 @@ namespace DreamJob.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult GetAllCandidates()
+        public IActionResult GetAllCandidates(int? pageNumber)
         {
-            return View(new DisplayCandidatesViewModel
+            //ViewData["CurrentCategory"] = categoryFilter;
+
+            var candidates = _candidateService.GetAllCandidates(pageNumber ?? 1, 10);
+            var candidatesCount = _candidateService.GetCandiatesCount();
+
+            DisplayCandidatesViewModel model = new DisplayCandidatesViewModel()
             {
-                Candidates = _candidateService.GetAllCandidates()
-            });
+                Candidates = candidates,
+                PageIndex = pageNumber.GetValueOrDefault(1),
+                TotalPages = (int)Math.Ceiling(candidatesCount / (double)10)
+
+            };
+
+            return View(model);
         }
 
        

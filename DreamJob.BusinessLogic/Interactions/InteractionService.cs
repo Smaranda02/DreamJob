@@ -87,6 +87,7 @@ namespace DreamJob.BusinessLogic.Interactions
                                  .Include(i => i.JobOffer)
                                  .ThenInclude(i => i.Employer)
                                  .Where(i => i.FeedbackCandidate == true && i.FeedbackEmployer == true && i.JobOffer.EmployerId == employerId)
+                                 .OrderBy(i => i.Candidate.Surname)
                                  .ToList();
             }
 
@@ -98,6 +99,7 @@ namespace DreamJob.BusinessLogic.Interactions
                                  .Include(i => i.JobOffer)
                                  .ThenInclude(i => i.Employer)
                                  .Where(i => i.FeedbackCandidate == true && i.FeedbackEmployer == true && i.CandidateId == candidateId)
+                                 .OrderBy(i => i.Candidate.Surname)
                                  .ToList();
             }
             

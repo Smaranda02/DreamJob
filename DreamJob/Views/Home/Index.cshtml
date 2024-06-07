@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using DreamJob.Common.Enums;
 @inject DreamJob.BusinessLogic.Users.ViewModels.CurrentUserViewModel CurrentUserViewModel;
 
 
@@ -59,8 +60,18 @@
                 <h1 class="display-4">Let's discover opportunities together, @CurrentUserViewModel.Username!
                     <i class="fas fa-desktop fa-2x fa-beat-fade"></i>
                 </h1>
-                <p class="lead">Find your dream job or hire the best candidates!</p>
-                <a class="btn btn-primary btn-lg" href="/Candidate/GetCandidates" role="button">Discover</a>
+
+                    @if(CurrentUserViewModel.Role == (int)Roles.Employer)
+                    {
+                         <p class="lead">Hire the best candidates and maximize your potential!</p>
+                        <a class="btn btn-primary btn-lg" href="/Candidate/GetCandidates" role="button">Discover</a>
+                    }
+                    else if (CurrentUserViewModel.Role == (int)Roles.Candidate)
+                    {
+                          <p class="lead">Find your dream job and maximize your career!</p>
+                        <a class="btn btn-primary btn-lg" href="/JobOffer/GetAllJobOffers" role="button">Discover</a>
+                    }
+
                 </div>
             }
             else

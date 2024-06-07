@@ -1,7 +1,6 @@
 ﻿var candidates = candidatesData || []
 
 function likeCandidateClicked(index) {
-    console.log('aici');
 
 
     console.log(candidates[index]);

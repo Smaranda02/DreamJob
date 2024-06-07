@@ -67,12 +67,14 @@ namespace DreamJob.BusinessLogic.JobOffers
 
         }
 
-        public List<JobOfferViewModel> GetMyJobOffers()
+        public List<JobOfferViewModel> GetMyJobOffers(int pageIndex, int pageSize)
         {
             var jobOffers = _context.JobOffers
                             .Include(j => j.Employer)
                             .Where(j => j.EmployerId == _userService.GetCurrentEmployerId())
+                            .Skip((pageIndex - 1) * pageSize).Take(pageSize)
                             .ToList();
+
             var jobOfferList = new List<JobOfferViewModel>();
 
             foreach(var jo in jobOffers)
@@ -87,7 +89,10 @@ namespace DreamJob.BusinessLogic.JobOffers
         public List<JobOfferViewModel> GetAllJobOffers()
         {
             var jobOffers = _context.JobOffers
-                            .Include(j => j.Employer).ToList();
+                           .Include(j => j.Employer)
+                           .ToList();
+           
+           
             var jobOfferList = new List<JobOfferViewModel>();
 
             foreach (var jo in jobOffers)
@@ -96,6 +101,12 @@ namespace DreamJob.BusinessLogic.JobOffers
                 jobOfferList.Add(jobOfferViewModel);
             }
             return jobOfferList;
+        }
+        
+
+        public int GetJobOffersCount()
+        {
+            return _context.JobOffers.Count();
         }
 
         public JobOffer GetJobOffer(int id)

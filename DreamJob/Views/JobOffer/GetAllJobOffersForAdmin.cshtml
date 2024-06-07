@@ -1,12 +1,11 @@
 ﻿@model DreamJob.BusinessLogic.JobOffers.ViewModels.DisplayJobOffersViewModel;
 
 <div class="row">
-    @for(int index = 0; index < Model.JobOffersViewModel.Count; index++)
+    @for (int index = 0; index < Model.JobOffersViewModel.Count; index++)
     {
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-
                     <h5 class="card-title">Name : @Model.JobOffersViewModel[index].Description</h5>
                     <p class="card-text">Employer  : @Model.JobOffersViewModel[index].EmployerName</p>
                     <p class="card-text">Office Location : @Model.JobOffersViewModel[index].OfficeLocation</p>
@@ -17,38 +16,6 @@
         </div>
     }
 </div>
-
-
-
-
-
-<div>
-
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-
-    }
-
-    @*Button for Previous*@
-
-    <button type="button" id="prev" class="btn btn-primary @(prevDisabled)" onclick="window.location.href = '@Url.Action("GetMyJobOffers",
-    new { pageNumber = Model.PageIndex - 1})'">
-        <i class="bi bi-arrow-left"></i>Previous
-    </button>
-
-
-    @*Button for Next*@
-
-    <button type="button" id="next" class="btn btn-primary @(nextDisabled)" onclick="window.location.href = '@Url.Action("GetMyJobOffers",
-    new { pageNumber = Model.PageIndex + 1})'">
-        Next<i class="bi bi-arrow-right"></i>
-    </button>
-
-</div>
-
-
-
 
 
 @section Scripts {
