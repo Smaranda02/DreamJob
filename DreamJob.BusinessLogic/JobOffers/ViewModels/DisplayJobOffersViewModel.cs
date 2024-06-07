@@ -5,14 +5,13 @@ namespace DreamJob.BusinessLogic.JobOffers.ViewModels {
     public class DisplayJobOffersViewModel {
 
         public List<JobOfferViewModel> JobOffersViewModel = new();
-        public int? Id { get; set; }
-        public decimal? Salary { get; set; }
 
-        public string? Description { get; set; } = null!;
+        public int PageIndex { get; set; }
+        public int TotalPages { get; set; }
 
-        public string? Employer { get; set; } = null!;
-        public string? OfficeLocation { get; set; } = null!;
-        public string? EmployerLinkedin { get; set; } = null!;
+        public bool HasPreviousPage => PageIndex > 1;
+
+        public bool HasNextPage => PageIndex < TotalPages;
 
     }
 

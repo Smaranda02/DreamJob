@@ -11,6 +11,8 @@ using AutoMapper;
 using DreamJob.BusinessLogic.Studies;
 using DreamJob.BusinessLogic.Experiences;
 using DreamJob.BusinessLogic.JobOffers.ViewModels;
+using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Routing.Matching;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -180,9 +182,13 @@ namespace DreamJob.BusinessLogic.Candidates
             return candidatesList;
         }
 
-        public List<CandidateViewModel> GetAllCandidates()
+        public List<CandidateViewModel> GetAllCandidates(int pageIndex, int pageSize)
         {
-            var candidates = _context.Candidates.ToList();
+          
+            var candidates = _context.Candidates
+                                    .Include(c => c.User)
+                                    .Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
             var candidatesList = new List<CandidateViewModel>();
 
             foreach(var candidate in candidates)
@@ -193,6 +199,12 @@ namespace DreamJob.BusinessLogic.Candidates
 
             return candidatesList;
         }
-       
+
+        public int GetCandiatesCount()
+        {
+            return  _context.Candidates.Count();
+
+        }
+
     }
 }

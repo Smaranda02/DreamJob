@@ -10,9 +10,34 @@
                     <p class="card-text">Description : @Model.Candidates[index].CandidateDescription</p>
                     <p class="card-text">Email : @Model.Candidates[index].Email</p>
                     <p class="card-text">LinkedIn : @Model.Candidates[index].Linkedin</p>
-        <a href="#" class="btn btn-warning">Delete</a>
       </div>
     </div>
   </div>
 }
+</div>
+
+
+<div>
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    }
+
+    @*Button for Previous*@
+
+    <button type="button" id="prev" class="btn btn-primary @(prevDisabled)" onclick="window.location.href = '@Url.Action("GetAllCandidates",
+    new { pageNumber = Model.PageIndex - 1})'">
+        <i class="bi bi-arrow-left"></i>Previous
+    </button>
+
+
+    @*Button for Next*@
+
+    <button type="button" id="next" class="btn btn-primary @(nextDisabled)" onclick="window.location.href = '@Url.Action("GetAllCandidates",
+    new { pageNumber = Model.PageIndex + 1})'">
+        Next<i class="bi bi-arrow-right"></i>
+    </button>
+
 </div>

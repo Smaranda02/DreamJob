@@ -70,7 +70,7 @@ namespace DreamJob.Controllers
         public IActionResult GetAllJobOffersForAdmin() {
 
             var jobOffers = _jobOfferService.GetAllJobOffers();
-            return View("GetMyJobOffers",
+            return View(
                 new DisplayJobOffersViewModel
             {
                 JobOffersViewModel= jobOffers
@@ -91,13 +91,17 @@ namespace DreamJob.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Employer")]
-        public IActionResult GetMyJobOffers()
+        public IActionResult GetMyJobOffers(int? pageNumber)
         {
 
-            var jobOffers = _jobOfferService.GetMyJobOffers();
+            var jobOffers = _jobOfferService.GetMyJobOffers(pageNumber ?? 1, 10);
+            var jobOffersCount = _jobOfferService.GetJobOffersCount();
+
             var model = new DisplayJobOffersViewModel
             {
-                JobOffersViewModel = jobOffers
+                JobOffersViewModel = jobOffers,
+                PageIndex = pageNumber.GetValueOrDefault(1),
+                TotalPages = (int)Math.Ceiling(jobOffersCount / (double)10)
             };
             return View(model);
         }
