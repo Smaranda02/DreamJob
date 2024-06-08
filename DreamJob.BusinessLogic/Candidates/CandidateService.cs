@@ -13,6 +13,8 @@ using DreamJob.BusinessLogic.Experiences;
 using DreamJob.BusinessLogic.JobOffers.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Routing.Matching;
+using DreamJob.BusinessLogic.Experiences.ViewModels;
+using DreamJob.BusinessLogic.Studies.ViewModels;
 
 namespace DreamJob.BusinessLogic.Candidates
 {
@@ -163,6 +165,8 @@ namespace DreamJob.BusinessLogic.Candidates
             var result = _context.Interactions
                                         .Include(i => i.JobOffer)
                                         .Include(i => i.Candidate.User)
+                                        .Include(i => i.Candidate.Experiences)
+                                        .Include(i => i.Candidate.Studies)
                                         .Where(i => i.JobOffer.Employer.Id == employerId)
                                         .Select(i => new { i.Candidate, i.JobOffer})
                                         .ToList()
@@ -176,7 +180,12 @@ namespace DreamJob.BusinessLogic.Candidates
             {
                 var candidateViewModel = _mapper.Map<Candidate, CandidateViewModel>(candidates[i]);
                 var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jobOffers[i]);
+                var experiencesList = _experienceService.GetCandidateExperiences(candidates[i].Id);
+                var studiesList = _studyService.GetCandidateStudies(candidates[i].Id);
+                
                 candidateViewModel.JobOffer = jobOfferViewModel;
+                candidateViewModel.Experiences= experiencesList;
+                candidateViewModel.Studies = studiesList;
                 candidatesList.Add(candidateViewModel);
             }
 

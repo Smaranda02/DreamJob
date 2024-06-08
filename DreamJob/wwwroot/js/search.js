@@ -8,13 +8,12 @@ function searchItems() {
 
     matches.forEach(item => {
 
-        const cardTitle = item.querySelector(' .card-body .card-title .name');
-
-        console.log(cardTitle)
+        var cardTitle = item.querySelector(' .card-body .card-title .name');
 
         if (cardTitle) {
-            const name = cardTitle.textContent.toLowerCase();
-
+            var name = cardTitle.textContent.toLowerCase();
+            console.log(searchTerm);
+            console.log(name)
             if (name.startsWith(searchTerm)) {
                 item.style.display = '';
             } else {

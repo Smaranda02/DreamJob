@@ -10,9 +10,9 @@
 
 
 <form asp-action="AddJobOffer" asp-controller="JobOffer">
-    You are user @CurrentUserViewModel.Username
+    You are user @CurrentUserViewModel.Username.ToUpper()
 
-    <input type="hidden" asp-for="Username" value="@CurrentUserViewModel.Username" />"
+    <input type="hidden" asp-for="Username" value="@CurrentUserViewModel.Username" />
 
     <div>
         <label asp-for="Salary"> Salary</label>
@@ -23,17 +23,7 @@
     <textarea asp-for="JobDescription"></textarea>
 </div>
 
-    <div>
-        Select a skill:
-        @foreach (var skill in Model.SelectedSkills)
-        {
-            <input type="checkbox" name="SelectedSkills" value="@skill.Value" />  @skill.Text
-        }
-
-
-
-
-    </div>
+  
 
     <div>
         <label asp-for="SkillIds" class="control-label">Skills</label>

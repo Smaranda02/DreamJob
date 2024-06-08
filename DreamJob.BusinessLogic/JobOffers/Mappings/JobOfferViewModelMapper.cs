@@ -17,6 +17,7 @@ namespace DreamJob.BusinessLogic.JobOffers.Mappings
                 .ForMember(a => a.EmployerName, a => a.MapFrom(s => s.Employer.EmployerName))
                 .ForMember(a => a.Description, a => a.MapFrom(s => s.JobDescription))
                 .ForMember(a => a.OfficeLocation, a => a.MapFrom(s => s.Employer.OfficeLocation))
+                .ForMember(a => a.EmployerLinkedin, a => a.MapFrom(s => s.Employer.EmployerLinkedin))
                 ;
         }
     }

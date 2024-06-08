@@ -4,9 +4,10 @@
 @using Newtonsoft.Json;
 @model DreamJob.BusinessLogic.JobOffers.ViewModels.DisplayJobOffersViewModel
 
-<style>
+<div>
+    <button class="btn btn-warning">Get employers with similar interests </button>
+</div>
 
-</style>
 
 <div id="jobOfferCarrousel" class="carousel slide" data-ride="carousel" data-interval="false">
     <div class="carousel-inner">
@@ -15,12 +16,24 @@
             <div class="carousel-item @(index == 0 ? "active" : "")">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@Model.JobOffersViewModel[index].EmployerName</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@Model.JobOffersViewModel[index].Description</h6>
-                        <p class="card-text">@Model.JobOffersViewModel[index].OfficeLocation</p>
-                        <p class="card-text"><small class="text-muted">@Model.JobOffersViewModel[index].Salary</small></p>
+                        <h5 class="card-title">Employer : @Model.JobOffersViewModel[index].EmployerName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Job Description :  @Model.JobOffersViewModel[index].Description</h6>
+                        <p class="card-text"> Office Location : @Model.JobOffersViewModel[index].OfficeLocation</p>
+                        <p class="card-text">Salary : @Model.JobOffersViewModel[index].Salary</p>
+                        <a class="card-link">Linkedin : @Model.JobOffersViewModel[index].EmployerLinkedin</a>
 
-                        <a href="@Model.JobOffersViewModel[index].EmployerLinkedin" class="card-link">Linkedin</a>
+
+                        @if (@Model.JobOffersViewModel[index].JobSkills.Count > 0)
+                        {
+                            <ul class="card-text">
+                                Skills needed :
+                                @foreach (var skill in @Model.JobOffersViewModel[index].JobSkills)
+                                {
+                                    <li>@skill   </li>
+                                }
+                            </ul>
+                        }
+                       
 
                         <div class="interaction d-flex justify-content-between mt-3">
 

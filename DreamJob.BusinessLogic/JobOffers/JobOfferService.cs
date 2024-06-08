@@ -89,8 +89,10 @@ namespace DreamJob.BusinessLogic.JobOffers
         public List<JobOfferViewModel> GetAllJobOffers()
         {
             var jobOffers = _context.JobOffers
-                           .Include(j => j.Employer)
-                           .ToList();
+                            .Include(j => j.Employer)
+                            .Include(j => j.JobSkills)
+                            .ThenInclude(j => j.Skill)
+                            .ToList();
            
            
             var jobOfferList = new List<JobOfferViewModel>();
@@ -98,6 +100,14 @@ namespace DreamJob.BusinessLogic.JobOffers
             foreach (var jo in jobOffers)
             {
                 var jobOfferViewModel = _mapper.Map<JobOffer, JobOfferViewModel>(jo);
+                var skills = new List<string>();
+
+                foreach(var skill in jo.JobSkills)
+                {
+                    skills.Add(skill.Skill.SkillName);
+                }
+
+                jobOfferViewModel.JobSkills = skills;
                 jobOfferList.Add(jobOfferViewModel);
             }
             return jobOfferList;

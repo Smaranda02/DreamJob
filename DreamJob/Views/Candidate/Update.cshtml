@@ -67,7 +67,7 @@
                                 <input type="hidden" class="specialty-input form-control" value="@item.Specialty" />
                             </td>
                             <td>
-                                <span class="years-text">@item.StartYear - @item.EndYear</span>
+                            <span class="years-text">@item.StartYear.ToString("yyyy") - @item.EndYear.ToString("yyyy")</span>
                                 <input type="hidden" class="startYear-input form-control" value="@item.StartYear.Year" />
                                 <input type="hidden" class="endYear-input form-control" value="@item.EndYear.Year" />
                             </td>
