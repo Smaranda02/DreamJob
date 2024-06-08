@@ -37,7 +37,7 @@ namespace DreamJob.Controllers
         public IActionResult AddJobOffer(CreateJobOfferViewModel model)
         {
             _jobOfferService.CreateJobOffer(model);
-            return Ok();
+            return RedirectToAction("Index", "Home");
             
         }
 

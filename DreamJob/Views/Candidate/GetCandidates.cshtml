@@ -16,8 +16,20 @@
                         <h6 class="card-subtitle mb-2 text-muted">Description : @Model.Candidates[index].CandidateDescription</h6>
                         <p class="card-text">LinkedIn : @Model.Candidates[index].Linkedin</p>
                         <p class="card-text">Email : @Model.Candidates[index].Email</p>
-                        
-                    
+
+                        @for (int i = 0; i < Model.Candidates[index].Experiences. Count; i++)
+                        {
+                            var exp = @Model.Candidates[index].Experiences[i];
+                            <p class="card-text">Experience @(i + 1) : @exp.ExperienceName, @exp.ExperienceDescription during @exp.StartYear.ToString("yyyy") - @exp.EndYear.ToString("yyyy")</p>
+                        }
+
+
+                        @for (int i = 0; i < Model.Candidates[index].Studies.Count; i++)
+                        {
+                            var exp = @Model.Candidates[index].Studies[i];
+                            <p class="card-text">Study @(i + 1) : University @exp.University, Specialy :  @exp.Specialty during @exp.StartYear.ToString("yyyy") - @exp.EndYear.ToString("yyyy")</p>
+                        }
+
 
                     <div class="interaction d-flex justify-content-between mt-3">
 

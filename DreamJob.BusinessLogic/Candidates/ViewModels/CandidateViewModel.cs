@@ -1,4 +1,6 @@
-﻿using DreamJob.BusinessLogic.JobOffers.ViewModels;
+﻿using DreamJob.BusinessLogic.Experiences.ViewModels;
+using DreamJob.BusinessLogic.JobOffers.ViewModels;
+using DreamJob.BusinessLogic.Studies.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +24,8 @@ namespace DreamJob.BusinessLogic.Candidates.ViewModels
         public string Linkedin { get; set; } = null!;
 
         public JobOfferViewModel JobOffer { get; set; }
+
+        public List<StudyViewModel>? Studies { get; set; } = new List<StudyViewModel>();
+        public List<ExperienceViewModel>? Experiences { get; set; } = new List<ExperienceViewModel>();
     }
 }

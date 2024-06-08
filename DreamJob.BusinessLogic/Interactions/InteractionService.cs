@@ -44,6 +44,7 @@ namespace DreamJob.BusinessLogic.Interactions
 
                 realInteraction.FeedbackEmployer = interaction.FeedbackEmployer;
                 _context.Interactions.Update(realInteraction);
+                _context.SaveChanges();
 
             }
 
@@ -67,7 +68,7 @@ namespace DreamJob.BusinessLogic.Interactions
 
             }
             
-            _context.SaveChanges();
+             _context.SaveChanges();
         }
 
         public List<MatchViewModel> GetMatches()
